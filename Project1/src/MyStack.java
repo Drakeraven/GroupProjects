@@ -62,6 +62,8 @@ public class MyStack <T>{
 		System.out.println(testStack);
 		System.out.println(testStack.topOfStack.myObject.toString());
 		System.out.println(testStack.size);
+		if(testStack.isEmpty())
+				System.out.println("this bich empty yeet"); 
 	}
 	 
 	private class Nodes<AnyType> { 

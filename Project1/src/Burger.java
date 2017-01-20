@@ -1,5 +1,3 @@
-
-
 public class Burger {
 	
 	private MyStack<String> myBurger; 
@@ -11,8 +9,6 @@ public class Burger {
 			"Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
 			"Mustard", "Ketchup", "Bottom Bun"};
 	
-	
-
 	private String[] myCheese = {"Pepperjack", "Mozzarella", "Cheddar"}; 
 	
 	private String[] mySauce = {"Mayonnaise", "Baron Sauce", "Mustard", "Ketchup"};
@@ -36,9 +32,13 @@ public class Burger {
 	public void addPatty(){
 		//iterate through stack find bottom patty push patty 
 		while(!myBurger.isEmpty()) {
-			if(myBurger.peek().equalsIgnoreCase("Beef"))
+			if(myBurger.peek().equalsIgnoreCase("Beef")) {
 				myBurger.push("Beef");
+			} else { 
+				myAux.push(myBurger.pop());
+			}
 		}
+		reset();
 	}
 	
 	public void changePatties(String pattyType){
@@ -54,10 +54,9 @@ public class Burger {
 		reset();		
 	}
 	
-	
-	
 	public void removePatty(){ 
-		//iterate through stack, find patty, remove patty (check if there's more than one patty, dont do unless there is 2+) 
+		//iterate through stack, find patty, remove patty 
+		//TODO check how many patties, if 2+ remove
 		while (!myBurger.isEmpty()){
 			if(myBurger.peek().equalsIgnoreCase("Beef")) {
 				myBurger.pop();
@@ -70,37 +69,75 @@ public class Burger {
 	
 	public void addCategory(String type) {
 		//for items in category, send to addIngredient
+		String[] category = {""}; 
+		
+		switch(type) {
+			case "cheese": category = myCheese; 
+				break;
+			case "veggies": category = myVeggies; 
+				break;
+			case "sauces": category = mySauce;
+		}
+		
+		for (int i = 0; i < category.length; i++){
+			addIngredient(category[i]);
+		}
 		
 	}
 	
 	public void removeCategory(String type) {
 		//for items in category sent to removeIngredient
+		String[] category = {""}; 
+		
+		switch(type) {
+			case "cheese": category = myCheese; 
+				break;
+			case "veggies": category = myVeggies; 
+				break;
+			case "sauces": category = mySauce;
+		}
+		
+		for (int i = 0; i < category.length; i++){
+			removeIngredient(category[i]);
+		}
 	}
 	
 	public void addIngredient(String type) {
 		//find the item after the ingredient in the array
 		//push ingredient to the top 
-		String location = ""; 
-		for(int i = baronBurger.length - 1; i >= 0; i--) {
+		int location = 0; 
+		boolean flag = false;
+		for(int i = 0; i < baronBurger.length; i++) {
 			if (baronBurger[i].equalsIgnoreCase(type)) {
-				location = baronBurger[i+1];
+				location = i+1;
 			}
 		}
-		while (!myBurger.isEmpty()) {
-			if (myBurger.peek().equalsIgnoreCase(location)) {
-				myBurger.push(type);
-			} else { 
-				myAux.push(myBurger.pop());
+		while (location < baronBurger.length || flag) { 
+			if (!myBurger.isEmpty()) {
+				if (myBurger.peek().equalsIgnoreCase(baronBurger[location])) {
+					myBurger.push(type);
+					flag = true; 
+				} else {
+					location++;
+					myAux.push(myBurger.pop());
+				}			
 			}
 		}
+		reset();
 	}
 	
-	public void removeIngredient(String Type) {
+	public void removeIngredient(String type) {
 		//find the item in the stack, pop
+		while (!myBurger.isEmpty()) {
+			if (myBurger.peek().equalsIgnoreCase(type)) {
+				myBurger.push(type);
+			} else 
+				myAux.push(myBurger.pop()); 
+		}
 		
 	}
 	
-	public void reset() {
+	private void reset() {
 		while (!myAux.isEmpty()) {
 			myBurger.push(myAux.pop());
 		}
@@ -108,5 +145,9 @@ public class Burger {
 	
 	public String toString() {
 		return myBurger.toString(); 
+	}
+	
+	public static void main (String[] theArgs) { 
+		
 	}
 }

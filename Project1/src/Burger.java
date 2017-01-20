@@ -17,6 +17,8 @@ public class Burger {
 	
 	public Burger(boolean theWorks) { 
 		myAux = new MyStack<String>();
+		myBurger = new MyStack<String>(); 
+		
 		if(theWorks){
 			for(int i = baronBurger.length - 1; i >= 0; i--) {
 				myBurger.push(baronBurger[i]);
@@ -25,15 +27,19 @@ public class Burger {
 			myBurger.push("Bottom Bun");
 			myBurger.push("Beef");
 			myBurger.push("Top Bun");
+			myBurger.push("Pickle");
 		}
 			
 	}
 	
 	public void addPatty(){
 		//iterate through stack find bottom patty push patty 
-		while(!myBurger.isEmpty()) {
-			if(myBurger.peek().equalsIgnoreCase("Beef")) {
-				myBurger.push("Beef");
+		boolean flag = true;
+		while (!myBurger.isEmpty()) {
+			if(myBurger.peek().equalsIgnoreCase("Beef") && flag) {
+				myAux.push(myBurger.pop());
+				myAux.push("Beef");
+				flag = false;
 			} else { 
 				myAux.push(myBurger.pop());
 			}
@@ -46,12 +52,12 @@ public class Burger {
 		while (!myBurger.isEmpty()) {
 			if(myBurger.peek().equalsIgnoreCase("Beef")) {
 				myBurger.pop();
-				myBurger.push(pattyType);
+				myAux.push(pattyType);
 			} else { 
 				myAux.push(myBurger.pop());
 			}
 		}
-		reset();		
+		reset();	
 	}
 	
 	public void removePatty(){ 
@@ -105,6 +111,8 @@ public class Burger {
 	public void addIngredient(String type) {
 		//find the item after the ingredient in the array
 		//push ingredient to the top 
+		System.out.println(type);
+		System.out.println("add ingredient");
 		int location = 0; 
 		boolean flag = false;
 		for(int i = 0; i < baronBurger.length; i++) {
@@ -112,17 +120,21 @@ public class Burger {
 				location = i+1;
 			}
 		}
+		System.out.println(baronBurger[location - 1]);
 		while (location < baronBurger.length || flag) { 
 			if (!myBurger.isEmpty()) {
 				if (myBurger.peek().equalsIgnoreCase(baronBurger[location])) {
+					System.out.println("if");
 					myBurger.push(type);
 					flag = true; 
 				} else {
+					System.out.println(myAux.toString());
 					location++;
 					myAux.push(myBurger.pop());
 				}			
 			}
 		}
+		System.out.println("reset");
 		reset();
 	}
 	

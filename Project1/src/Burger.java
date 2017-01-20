@@ -111,26 +111,27 @@ public class Burger {
 	public void addIngredient(String type) {
 		//find the item after the ingredient in the array
 		//push ingredient to the top 
-		System.out.println(type);
-		System.out.println("add ingredient");
+		System.out.println(type + "- add ingredient sent");
 		int location = 0; 
 		boolean flag = false;
 		for(int i = 0; i < baronBurger.length; i++) {
 			if (baronBurger[i].equalsIgnoreCase(type)) {
-				location = i+1;
+				location = i + 1;
 			}
 		}
-		System.out.println(baronBurger[location - 1]);
-		while (location < baronBurger.length || flag) { 
+		int checkSpot = location + 1;
+		System.out.println(baronBurger[location - 1] + "Item Above/to be placed");
+		System.out.println(baronBurger[location] + "Item below");
+		while (checkSpot < baronBurger.length || flag) { 
 			if (!myBurger.isEmpty()) {
 				if (myBurger.peek().equalsIgnoreCase(baronBurger[location])) {
-					System.out.println("if");
 					myBurger.push(type);
 					flag = true; 
 				} else {
-					System.out.println(myAux.toString());
-					location++;
+					System.out.println(myBurger);
+					checkSpot++;
 					myAux.push(myBurger.pop());
+					//System.out.println(myAux);
 				}			
 			}
 		}

@@ -19,7 +19,7 @@ public class Main {
 					bufferedStream.close();
 		} finally {}
 	
-//		testParse();		
+ 	testParse();		
 	}
 	
 	public static void testParse() {
@@ -55,15 +55,15 @@ public class Main {
 		int with = 0;
 		int but = 0;
 		for(int i = 0; i < words.length; i++) {
-			if(words[i].equals("with")) with = i;
-			if(words[i].equals("but")) but = i;
+			if(words[i].equals("with")) with = i + 1; // TODO fixed the with being sent.
+			if(words[i].equals("but")) but = i + 1;
 		}
 		
 		if(with > 0) {
 			int end = words.length;
 			if(but > 0) end = but;
 			for(int i = with; i < end; i++) {
-//				System.out.println(words[i]);
+				System.out.println(words[i] + " - parse sent");
 				boolean cat = isCategory(words[i]);
 				if(cat){
 					if (baronBurger) 

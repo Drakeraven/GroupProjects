@@ -37,7 +37,6 @@ public class Burger {
 		} else { 
 			myBottomBurger.push("Bottom Bun");
 			myBottomBurger.push("Beef");
-			myTopBurger.push("Pickle");
 			myTopBurger.push("Top Bun");
 			
 		}		
@@ -64,6 +63,20 @@ public class Burger {
 			}
 		}
 		reset(myTopBurger);	
+		
+		modelBottom.set(0, pattyType);
+		while (!myBottomBurger.isEmpty()) { 
+			if (myBottomBurger.peek().equalsIgnoreCase("Beef")
+					|| myBottomBurger.peek().equalsIgnoreCase("Chicken")
+					|| myBottomBurger.peek().equalsIgnoreCase("Veggie")) {
+				myBottomBurger.pop();
+				myAux.push(pattyType);
+			} else {
+				myAux.push(myBottomBurger.pop());
+			}
+		}
+		reset(myBottomBurger);
+		
 	}
 	
 	public void removePatty(){ 
@@ -72,6 +85,7 @@ public class Burger {
 			if(myTopBurger.peek().equalsIgnoreCase("Beef") || myTopBurger.peek().equalsIgnoreCase("Chicken")
 					|| myTopBurger.peek().equalsIgnoreCase("Veggie")) {
 				myTopBurger.pop();
+				break;
 			} else {
 				myAux.push(myTopBurger.pop());
 			}
@@ -168,7 +182,8 @@ public class Burger {
 			
 		while (!temp.isEmpty()) {
 			if (temp.peek().equalsIgnoreCase(type)) {
-				temp.push(type);
+				temp.pop();
+				break;
 			} else 
 				myAux.push(temp.pop()); 
 		}
@@ -187,6 +202,8 @@ public class Burger {
 		while(!myTopBurger.isEmpty()){
 			myBottomBurger.push(myTopBurger.pop()); 
 		}
+		
+		//System.err.println(myTopBurger);
 		
 		return myBottomBurger.toString(); 
 	}
@@ -208,8 +225,9 @@ public class Burger {
 		
 		
 		Burger other = new Burger(false);
-		System.out.println(other);
+		//System.out.println(other);
 		other.addPatty();
+		other.changePatties("Chicken");
 		System.out.println(other);
 	}
 }

@@ -1,15 +1,20 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Burger {
 	
-	private MyStack<String> myBurger; 
+	private MyStack<String> myTopBurger; 
 	
-	private MyStack<String> myAux; 
+	private MyStack<String> myBottomBurger; 
 	
-	private String myPatty = "Beef"; 
+	private MyStack<String> myAux;  
 	
-	private String[] baronBurger = {"Pickle", "Top Bun", 
-			"Mayonnaise", "Baron Sauce", "Lettuce", "Tomato", "Onions",
-			"Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
-			"Mustard", "Ketchup", "Bottom Bun"};
+	private List<String> modelTop = new ArrayList<>(Arrays.asList("Pickle", "Top Bun", 
+			"Mayonnaise", "Baron Sauce", "Lettuce", "Tomato", "Onions"));
+	
+	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
+			"Mustard", "Ketchup", "Bottom Bun"));
 	
 	private String[] myCheese = {"Pepperjack", "Mozzarella", "Cheddar"}; 
 	
@@ -19,61 +24,59 @@ public class Burger {
 	
 	public Burger(boolean theWorks) { 
 		myAux = new MyStack<String>();
-		myBurger = new MyStack<String>(); 
+		myTopBurger = new MyStack<String>(); 
+		myBottomBurger = new MyStack<String>();
 		
 		if(theWorks){
-			for(int i = baronBurger.length - 1; i >= 0; i--) {
-				myBurger.push(baronBurger[i]);
+			for (int i = 0; i < modelTop.size(); i++) {
+				myTopBurger.push(modelTop.get(i));
+			}
+			for (int i = (modelBottom.size() - 1); i >= 0; i--) {
+				myBottomBurger.push(modelBottom.get(i));
 			}
 		} else { 
-			myBurger.push("Bottom Bun");
-			myBurger.push("Beef");
-			myBurger.push("Top Bun");
-			myBurger.push("Pickle");
-		}
+			myBottomBurger.push("Bottom Bun");
+			myBottomBurger.push("Beef");
+			myTopBurger.push("Pickle");
+			myTopBurger.push("Top Bun");
 			
+		}		
 	}
 	
 	public void addPatty(){
-		//iterate through stack find bottom patty push patty 
-		boolean flag = true;
-		while (!myBurger.isEmpty()) {
-			if(myBurger.peek().equalsIgnoreCase("Beef") && flag) {
-				myAux.push(myBurger.pop());
-				myAux.push("Beef");
-				flag = false;
-			} else { 
-				myAux.push(myBurger.pop());
-			}
+		//adds new patties to the top of the topBurger 
+		if (!myTopBurger.isEmpty()) { 
+			myTopBurger.push("Beef");
 		}
-		reset();
 	}
 	
 	public void changePatties(String pattyType){
 		//iterate through stack, find patty, pop, push new patty
-		myPatty = pattyType;
-		while (!myBurger.isEmpty()) {
-			if(myBurger.peek().equalsIgnoreCase("Beef")) {
-				myBurger.pop();
+		modelTop.add(pattyType);
+		while (!myTopBurger.isEmpty()) {
+			if(myTopBurger.peek().equalsIgnoreCase("Beef") 
+					|| myTopBurger.peek().equalsIgnoreCase("Chicken")
+					|| myTopBurger.peek().equalsIgnoreCase("Veggie")) {
+				myTopBurger.pop();
 				myAux.push(pattyType);
 			} else { 
-				myAux.push(myBurger.pop());
+				myAux.push(myTopBurger.pop());
 			}
 		}
-		reset();	
+		reset(myTopBurger);	
 	}
 	
 	public void removePatty(){ 
 		//iterate through stack, find patty, remove patty 
-		//TODO check how many patties, if 2+ remove
-		while (!myBurger.isEmpty()){
-			if(myBurger.peek().equalsIgnoreCase("Beef")) {
-				myBurger.pop();
+		while (!myTopBurger.isEmpty()){
+			if(myTopBurger.peek().equalsIgnoreCase("Beef") || myTopBurger.peek().equalsIgnoreCase("Chicken")
+					|| myTopBurger.peek().equalsIgnoreCase("Veggie")) {
+				myTopBurger.pop();
 			} else {
-				myAux.push(myBurger.pop());
+				myAux.push(myTopBurger.pop());
 			}
 		}
-		reset();
+		reset(myTopBurger);
 	}
 	
 	public void addCategory(String type) {
@@ -89,7 +92,7 @@ public class Burger {
 		}
 		
 		for (int i = 0; i < category.length; i++){
-			addIngredient(category[i]);
+			//addIngredient(category[i]);
 		}
 		
 	}
@@ -116,99 +119,97 @@ public class Burger {
 	
 	
 	public void addIngredient(String type) {
-		//find the item after the ingredient in the array
-		//push ingredient to the top 
-		System.out.println(type + "- add ingredient sent");
-		int location = 0; 
-		boolean flag = false;
-		for(int i = 0; i < baronBurger.length; i++) {
-			if (baronBurger[i].equalsIgnoreCase(type)) {
-				location = i + 1;
-			}
-		}
-		int checkSpot = 0;
-		System.out.println(baronBurger[location - 1] + " Item Above/to be placed");
-		System.out.println(baronBurger[location] + " Item below");
-		while (location + checkSpot < baronBurger.length || flag) {   //CHANGED BOUNDS, STILL HITTING OUT OF BOUNDS EXCEPTION
-			while (!myBurger.isEmpty()) {
-				System.out.println(baronBurger[location + checkSpot]);   //PUTS ONION AFTER FIRST BEEF??? FOR SOME REASON
-				if (myBurger.peek().equalsIgnoreCase(baronBurger[location + checkSpot])) {
-					myBurger.push(type);
-					System.out.println("Hello" + myBurger);
-					flag = true; 								//FLAG DOESN'T END THE LOOP, CONTINUES LOOPING AFTER PUSHING ONION
-				} else {
-					System.out.println(myBurger);
-					myAux.push(myBurger.pop());
-					//System.out.println(myAux);
-				}	
-				System.out.println(location + checkSpot);
-				checkSpot++;
-			}
-			//checkSpot++;
-			//System.out.println(myBurger);
-			reset();
-		}
-		//System.out.println(myBurger);
-		System.out.println("reset");
-		reset();
-	}
-	
-	//REWRITING IN AN ATTEMPT TO UNDERESTAN WHATS GOING ON.
-	public void test (String type) {
-		//want to figure out what item is adjacent to the TYPE in order
-		//to put it in the right place
-		
-		int location = 0; 
-		
-		//First, figure out where the item is in the complete list 
-		for (int i = 0; i < baronBurger.length; i++) { 
-			if (type.equalsIgnoreCase(baronBurger[i])) {
-				location = i; 
-			}
-		}
-		
-		//iterate over the stack, checking if the item below it exists in the stack
-		//if not, reset. increment the baronBurger location, repeat above
-		int add = 1; 
-		boolean flag = false; 
-		while (location + add < baronBurger.length) {
-			while (!myBurger.isEmpty() || flag){
-				if (myBurger.peek().equalsIgnoreCase(baronBurger[location + add])){
-					myBurger.push(type);
-					flag = true; 
-				} else { 
-					myAux.push(myBurger.pop());
-				}
-				add++; 
-			}
-			//add++;
-			//flag = false;
-		}
-		 
+//		//find the item after the ingredient in the array
+//		//push ingredient to the top 
+//		System.out.println(type + "- add ingredient sent");
+//		int location = 0; 
+//		boolean flag = false;
+//		for(int i = 0; i < baronBurger.length; i++) {
+//			if (baronBurger[i].equalsIgnoreCase(type)) {
+//				location = i + 1;
+//			}
+//		}
+//		int checkSpot = 0;
+//		System.out.println(baronBurger[location - 1] + " Item Above/to be placed");
+//		System.out.println(baronBurger[location] + " Item below");
+//		while (location + checkSpot < baronBurger.length || flag) {   //CHANGED BOUNDS, STILL HITTING OUT OF BOUNDS EXCEPTION
+//			while (!myBurger.isEmpty()) {
+//				System.out.println(baronBurger[location + checkSpot]);   //PUTS ONION AFTER FIRST BEEF??? FOR SOME REASON
+//				if (myBurger.peek().equalsIgnoreCase(baronBurger[location + checkSpot])) {
+//					myBurger.push(type);
+//					System.out.println("Hello" + myBurger);
+//					flag = true; 								//FLAG DOESN'T END THE LOOP, CONTINUES LOOPING AFTER PUSHING ONION
+//				} else {
+//					System.out.println(myBurger);
+//					myAux.push(myBurger.pop());
+//					//System.out.println(myAux);
+//				}	
+//				System.out.println(location + checkSpot);
+//				checkSpot++;
+//			}
+//			//checkSpot++;
+//			//System.out.println(myBurger);
+//			reset();
+//		}
+//		//System.out.println(myBurger);
+//		System.out.println("reset");
+//		reset();
 	}
 	
 	public void removeIngredient(String type) {
 		//find the item in the stack, pop
-		while (!myBurger.isEmpty()) {
-			if (myBurger.peek().equalsIgnoreCase(type)) {
-				myBurger.push(type);
-			} else 
-				myAux.push(myBurger.pop()); 
+		MyStack<String> temp;
+		
+		if (modelTop.contains(type)) {
+			temp = myTopBurger; 
+		} else {
+			temp = myBottomBurger; 
 		}
+			
+		while (!temp.isEmpty()) {
+			if (temp.peek().equalsIgnoreCase(type)) {
+				temp.push(type);
+			} else 
+				myAux.push(temp.pop()); 
+		}
+		reset(temp);
 		
 	}
 	
-	private void reset() {
+	private void reset(MyStack<String> theBurger) {
 		while (!myAux.isEmpty()) {
-			myBurger.push(myAux.pop());
+			theBurger.push(myAux.pop());
 		}
 	}
 	
 	public String toString() {
-		return myBurger.toString(); 
+		//add something to put the top and bottom together
+		while(!myTopBurger.isEmpty()){
+			myBottomBurger.push(myTopBurger.pop()); 
+		}
+		
+		return myBottomBurger.toString(); 
 	}
 	
+	//Testing purposes 
 	public static void main (String[] theArgs) { 
+		Burger myBurg = new Burger(true); 
+//		System.out.println(myBurg.myTopBurger);
+//		System.out.println(myBurg);
+//		//myBurg.removePatty();
+//		myBurg.addPatty();
+//		System.err.println(myBurg.myTopBurger);
+//		myBurg.addPatty();
+//		myBurg.addPatty();
+//		System.out.println(myBurg);
+//		System.out.println(myBurg.modelTop);
+//		System.out.println(myBurg.myTopBurger);
 		
+		
+		
+		Burger other = new Burger(false);
+		System.out.println(other);
+		other.addPatty();
+		System.out.println(other);
 	}
 }

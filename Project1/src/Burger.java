@@ -114,8 +114,9 @@ public class Burger {
 	public void removeCategory(String type) {
 		//for items in category sent to removeIngredient
 		String[] category = {""}; 
+		String temp = type.toLowerCase();
 		
-		switch(type) {
+		switch(temp) {
 			case "cheese": category = myCheese; 
 				break;
 			case "veggies": category = myVeggies; 
@@ -123,7 +124,7 @@ public class Burger {
 			case "sauces": category = mySauce;
 		}
 		
-		System.out.println(category.toString());
+		//System.out.println(category.toString());
 		
 		for (int i = 0; i < category.length; i++){
 			System.out.println("removeCat item sent: " + category[i]);
@@ -211,16 +212,11 @@ public class Burger {
 	//Testing purposes 
 	public static void main (String[] theArgs) { 
 		Burger myBurg = new Burger(true); 
-//		System.out.println(myBurg.myTopBurger);
-//		System.out.println(myBurg);
-//		//myBurg.removePatty();
-//		myBurg.addPatty();
-//		System.err.println(myBurg.myTopBurger);
-//		myBurg.addPatty();
-//		myBurg.addPatty();
-//		System.out.println(myBurg);
-//		System.out.println(myBurg.modelTop);
-//		System.out.println(myBurg.myTopBurger);
+		myBurg.addPatty();
+		myBurg.addPatty();
+		myBurg.removeCategory("Sauces");
+		System.out.println(myBurg);
+		
 		
 		
 		

@@ -227,7 +227,7 @@ public class Burger {
 		myBurg.addPatty();
 		myBurg.changePatties("Chicken");
 		//myBurg.addIngredient("Onions");
-		//myBurg.addCategory("Sauces");
+		myBurg.addCategory("Sauces");
 		//myBurg.addCategory("Cheese");
 		//myBurg.addCategory("Veggies");
 		//myBurg.addIngredient("Pickle");

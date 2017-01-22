@@ -100,7 +100,7 @@ public class Burger {
 		//for items in category, send to addIngredient
 		String[] category = {""}; 
 		String temp = type.toLowerCase();
-		
+	
 		if (temp.equalsIgnoreCase("cheese")) {
 			category = myCheese;
 		} else if (temp.equalsIgnoreCase("veggies")) {
@@ -237,9 +237,10 @@ public class Burger {
 //		myBurg.addIngredient("Mushrooms");
 		//myBurg.removeIngredient("Cheddar");
 		//myBurg.removeIngredient("Cheddar");
+
+		myBurg.removeCategory("Veggies");
+		myBurg.addIngredient("Lettuce");
 		System.out.println(myBurg);
-		
-		
 		
 //		Burger other = new Burger(false);
 //		other.addPatty();

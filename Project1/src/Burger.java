@@ -13,14 +13,16 @@ public class Burger {
 	private List<String> modelTop = new ArrayList<>(Arrays.asList("Pickle", "Top Bun", 
 			"Mayonnaise", "Baron Sauce", "Lettuce", "Tomato", "Onions"));
 	
-	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
-			"Mustard", "Ketchup", "Bottom Bun"));
+//	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
+//			"Mustard", "Ketchup", "Bottom Bun"));
+	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Bottom Bun", "Ketchup", "Mustard", "Mushrooms", 
+			"Beef", "Cheddar", "Mozzarella", "Pepperjack"));
 	
 	private String[] myCheese = {"Pepperjack", "Mozzarella", "Cheddar"}; 
 	
 	private String[] mySauce = {"Mayonnaise", "Baron Sauce", "Mustard", "Ketchup"};
 	
-	private String[] myVeggies = {"Pickle", "Lettuce", "Tomato", "Onion", "Mushrooms"};
+	private String[] myVeggies = {"Pickle", "Lettuce", "Tomato", "Onions", "Mushrooms"};
 	
 	public Burger(boolean theWorks) { 
 		myAux = new MyStack<String>();
@@ -31,7 +33,7 @@ public class Burger {
 			for (int i = 0; i < modelTop.size(); i++) {
 				myTopBurger.push(modelTop.get(i));
 			}
-			for (int i = (modelBottom.size() - 1); i >= 0; i--) {
+			for (int i = 0; i < modelBottom.size(); i++) {  //TODO Flipped this along with the modelBottom.
 				myBottomBurger.push(modelBottom.get(i));
 			}
 		} else { 
@@ -39,7 +41,7 @@ public class Burger {
 			myBottomBurger.push("Beef");
 			myTopBurger.push("Top Bun");
 			
-		}		
+		}
 	}
 	
 	public void addPatty(){
@@ -64,7 +66,7 @@ public class Burger {
 		}
 		reset(myTopBurger);	
 		
-		modelBottom.set(0, pattyType);
+		modelBottom.set(4, pattyType); //TODO THERE YOU ARE 
 		while (!myBottomBurger.isEmpty()) { 
 			if (myBottomBurger.peek().equalsIgnoreCase("Beef")
 					|| myBottomBurger.peek().equalsIgnoreCase("Chicken")
@@ -76,7 +78,6 @@ public class Burger {
 			}
 		}
 		reset(myBottomBurger);
-		
 	}
 	
 	public void removePatty(){ 
@@ -97,16 +98,16 @@ public class Burger {
 		//for items in category, send to addIngredient
 		String[] category = {""}; 
 		
-		switch(type) {
-			case "cheese": category = myCheese; 
-				break;
-			case "veggies": category = myVeggies; 
-				break;
-			case "sauces": category = mySauce;
+		if (type.equalsIgnoreCase("cheese")) {
+			category = myCheese;
+		} else if (type.equalsIgnoreCase("veggies")) {
+			category = myVeggies;
+		} else {
+			category = mySauce;
 		}
-		
+
 		for (int i = 0; i < category.length; i++){
-			//addIngredient(category[i]);
+			addIngredient(category[i]);
 		}
 		
 	}
@@ -134,41 +135,39 @@ public class Burger {
 	
 	
 	public void addIngredient(String type) {
-//		//find the item after the ingredient in the array
-//		//push ingredient to the top 
-//		System.out.println(type + "- add ingredient sent");
-//		int location = 0; 
-//		boolean flag = false;
-//		for(int i = 0; i < baronBurger.length; i++) {
-//			if (baronBurger[i].equalsIgnoreCase(type)) {
-//				location = i + 1;
-//			}
-//		}
-//		int checkSpot = 0;
-//		System.out.println(baronBurger[location - 1] + " Item Above/to be placed");
-//		System.out.println(baronBurger[location] + " Item below");
-//		while (location + checkSpot < baronBurger.length || flag) {   //CHANGED BOUNDS, STILL HITTING OUT OF BOUNDS EXCEPTION
-//			while (!myBurger.isEmpty()) {
-//				System.out.println(baronBurger[location + checkSpot]);   //PUTS ONION AFTER FIRST BEEF??? FOR SOME REASON
-//				if (myBurger.peek().equalsIgnoreCase(baronBurger[location + checkSpot])) {
-//					myBurger.push(type);
-//					System.out.println("Hello" + myBurger);
-//					flag = true; 								//FLAG DOESN'T END THE LOOP, CONTINUES LOOPING AFTER PUSHING ONION
-//				} else {
-//					System.out.println(myBurger);
-//					myAux.push(myBurger.pop());
-//					//System.out.println(myAux);
-//				}	
-//				System.out.println(location + checkSpot);
-//				checkSpot++;
-//			}
-//			//checkSpot++;
-//			//System.out.println(myBurger);
-//			reset();
-//		}
-//		//System.out.println(myBurger);
-//		System.out.println("reset");
-//		reset();
+		MyStack<String> workingBurger;
+		List<String> modelBurger;
+		boolean notPlaced = true;
+		
+		if (this.modelTop.contains(type)) {
+			modelBurger = modelTop;
+			workingBurger = myTopBurger;
+		} else {
+			modelBurger = modelBottom;
+			workingBurger = myBottomBurger;
+		}
+		
+		int ingLocation = modelBurger.indexOf(type) - 1;
+		
+		System.out.println(modelBurger);
+		System.out.println(workingBurger);
+		System.out.println(modelBurger.get(ingLocation));
+		while (notPlaced) { 
+			for (int i = 0; i < workingBurger.size(); i++) {
+				System.out.println(modelBurger.get(ingLocation));
+				if ( workingBurger.peek().equalsIgnoreCase("Top Bun") //TODO maybe not an if?
+						|| workingBurger.peek().equalsIgnoreCase("Bottom Bun")
+						|| workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation))) {
+					//System.out.println(workingBurger);
+					workingBurger.push(type);
+					notPlaced = false;
+				} else {
+					myAux.push(workingBurger.pop());
+					ingLocation--;
+				}
+			}
+		}
+		reset(workingBurger);
 	}
 	
 	public void removeIngredient(String type) {
@@ -214,16 +213,20 @@ public class Burger {
 		Burger myBurg = new Burger(true); 
 		myBurg.addPatty();
 		myBurg.addPatty();
-		myBurg.removeCategory("Sauces");
+		myBurg.removeCategory("Veggies");
+		myBurg.addIngredient("Lettuce");
 		System.out.println(myBurg);
 		
 		
-		
-		
-		Burger other = new Burger(false);
-		//System.out.println(other);
-		other.addPatty();
-		other.changePatties("Chicken");
-		System.out.println(other);
+//		Burger other = new Burger(false);
+//		other.addPatty();
+//		other.addPatty();
+//		other.changePatties("Turkey");
+//		other.addIngredient("Onions");
+//		other.addIngredient("Pepperjack");
+//		other.addIngredient("Mushrooms");
+//		//other.addCategory("Cheese");
+//		//other.removeIngredient("Cheddar");
+//		System.out.println(other);
 	}
 }

@@ -163,9 +163,9 @@ public class Burger {
 					notPlaced = false;
 				} else {
 					myAux.push(workingBurger.pop());
-					ingLocation--;
 				}
 			}
+			ingLocation--;
 		}
 		reset(workingBurger);
 	}

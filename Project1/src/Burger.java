@@ -11,7 +11,7 @@ public class Burger {
 	private MyStack<String> myAux;  
 	
 	private List<String> modelTop = new ArrayList<>(Arrays.asList("Pickle", "Top Bun", 
-			"Mayonnaise", "Baron Sauce", "Lettuce", "Tomato", "Onions"));
+			"Mayonnaise", "Baron-Sauce", "Lettuce", "Tomato", "Onions"));
 	
 //	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
 //			"Mustard", "Ketchup", "Bottom Bun"));
@@ -20,7 +20,7 @@ public class Burger {
 	
 	private String[] myCheese = {"Pepperjack", "Mozzarella", "Cheddar"}; 
 	
-	private String[] mySauce = {"Mayonnaise", "Baron Sauce", "Mustard", "Ketchup"};
+	private String[] mySauce = {"Mayonnaise", "Baron-Sauce", "Mustard", "Ketchup"};
 	
 	private String[] myVeggies = {"Pickle", "Lettuce", "Tomato", "Onions", "Mushrooms"};
 	
@@ -110,6 +110,7 @@ public class Burger {
 		}
 
 		for (int i = 0; i < category.length; i++){
+			//System.out.println(category[i] + " To Add");
 			addIngredient(category[i]);
 		}
 		
@@ -125,79 +126,88 @@ public class Burger {
 				break;
 			case "veggies": category = myVeggies; 
 				break;
-			case "sauces": category = mySauce;
+			case "sauce": category = mySauce;
 		}
 		
 		for (int i = 0; i < category.length; i++){
-			System.out.println("Sent: " + category[i]);
+			//System.out.println("Sent: " + category[i]);
 			removeIngredient(category[i]);
 		}
 	}
 	
 	
 	public void addIngredient(String type) {
-		MyStack<String> workingBurger;
-		List<String> modelBurger;
+		MyStack<String> workingBurger = null;
+		List<String> modelBurger = null ;
 		boolean notPlaced = true;
 		
-		if (this.modelTop.contains(type)) {
-			modelBurger = modelTop;
-			workingBurger = myTopBurger;
-		} else if (this.modelBottom.contains(type)) {
-			modelBurger = modelBottom;
-			workingBurger = myBottomBurger;
-		} else {
-			modelBurger = null; 
-			workingBurger = null;
-			notPlaced = false; 
-		}
-		
-		//int ingLocation = modelBurger.indexOf(type) - 1;
-		
-		//System.out.println(modelBurger);
-		//System.out.println(workingBurger);
-		//System.out.println(modelBurger.get(ingLocation));
-		while (notPlaced) { 
-			int ingLocation = modelBurger.indexOf(type) - 1;
-			for (int i = 0; i < workingBurger.size(); i++) {
-				//System.out.println(modelBurger.get(ingLocation));
-				if ( workingBurger.peek().equalsIgnoreCase("Top Bun") //TODO maybe not an if?
-						|| workingBurger.peek().equalsIgnoreCase("Bottom Bun")
-						|| workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation))) {
-					//System.out.println(workingBurger);
-					workingBurger.push(type);
-					notPlaced = false;
-				} else {
-					myAux.push(workingBurger.pop());
-				}
+		//System.out.println(type);
+		if (type.equalsIgnoreCase("Pickle")) {
+			addPickle();
+		} else if (!(type.equalsIgnoreCase("with") || (type.equalsIgnoreCase("but")))){
+
+			if (this.modelTop.contains(type)) {
+				modelBurger = modelTop;
+				workingBurger = myTopBurger;
+			} else if (this.modelBottom.contains(type)) {
+				modelBurger = modelBottom;
+				workingBurger = myBottomBurger;
 			}
-			ingLocation--;
+			
+			int ingLocation = modelBurger.indexOf(type) - 1;
+			
+			//System.out.println(modelBurger);
+			//System.out.println(workingBurger);
+			//System.out.println(modelBurger.get(ingLocation));
+			while (notPlaced) { 
+				//int ingLocation = modelBurger.indexOf(type) - 1;
+				for (int i = 0; i < workingBurger.size(); i++) {
+					//System.out.println(modelBurger.get(ingLocation));
+					if ( workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation)) 
+							|| workingBurger.peek().equalsIgnoreCase("Top Bun") //TODO maybe not an if?
+							|| workingBurger.peek().equalsIgnoreCase("Bottom Bun")
+							) {
+						//System.out.println(workingBurger);
+						workingBurger.push(type);
+						notPlaced = false;
+					} else {
+						myAux.push(workingBurger.pop());
+					}
+				}
+				ingLocation--;
+			}
+			reset(workingBurger);
 		}
-		reset(workingBurger);
 	}
 	
 	public void removeIngredient(String type) {
 		//find the item in the stack, pop
 		MyStack<String> temp;
-		System.out.println("Remove: " + type);
-		
-		if (modelTop.contains(type)) {
-			temp = myTopBurger; 
-		} else {
-			temp = myBottomBurger; 
-		}
-			
-		while (!temp.isEmpty()) {
-			if (temp.peek().equalsIgnoreCase(type)) {
-				temp.pop();
-				break;
-			} else 
-				myAux.push(temp.pop()); 
-		}
-		reset(temp);
-		
+		if (!type.equalsIgnoreCase("but")) {
+			//System.out.println("Remove: " + type);
+			if (modelTop.contains(type)) {
+				temp = myTopBurger; 
+			} else {
+				temp = myBottomBurger; 
+			}
+				
+			while (!temp.isEmpty()) {
+				if (temp.peek().equalsIgnoreCase(type)) {
+					temp.pop();
+				} else 
+					myAux.push(temp.pop()); 
+			}
+			reset(temp);
+		}	
 	}
 	
+	private void addPickle() {
+		while (!myTopBurger.isEmpty()) {
+			myAux.push(myTopBurger.pop());
+		}
+		myTopBurger.push("Pickle");
+		reset(myTopBurger);
+	}
 	private void reset(MyStack<String> theBurger) {
 		while (!myAux.isEmpty()) {
 			theBurger.push(myAux.pop());
@@ -217,39 +227,17 @@ public class Burger {
 	
 	//Testing purposes 
 	public static void main (String[] theArgs) { 
-		Burger myBurg = new Burger(false); 
-//		myBurg.removeCategory("Veggies");
-//		myBurg.removeCategory("Sauce");
-//		myBurg.addCategory("Baron Sauce");
-//		System.out.println(myBurg);
-		myBurg.addPatty();
-		myBurg.addPatty();
-		myBurg.changePatties("Chicken");
-		//myBurg.addIngredient("Onions");
-		myBurg.addCategory("Sauces");
-		//myBurg.addCategory("Cheese");
-		//myBurg.addCategory("Veggies");
-		//myBurg.addIngredient("Pickle");
-		//myBurg.addIngredient("Onions");
-//		myBurg.addIngredient("Lettuce");
-//		myBurg.addIngredient("Tomato");
-//		myBurg.addIngredient("Mushrooms");
-		//myBurg.removeIngredient("Cheddar");
-		//myBurg.removeIngredient("Cheddar");
+//		Burger myBurg = new Burger(true); 
 
-		myBurg.removeCategory("Veggies");
-		myBurg.addIngredient("Lettuce");
-		System.out.println(myBurg);
 		
-//		Burger other = new Burger(false);
-//		other.addPatty();
-//		other.addPatty();
-//		other.changePatties("Turkey");
-//		other.addIngredient("Onions");
-//		other.addIngredient("Pepperjack");
-//		other.addIngredient("Mushrooms");
-//		//other.addCategory("Cheese");
-//		//other.removeIngredient("Cheddar");
-//		System.out.println(other);
+		Burger other = new Burger(false);
+		other.addPatty();
+		other.addPatty();
+		other.changePatties("Chicken");
+		//other.addIngredient("Onions");
+		other.addCategory("Cheese");
+		//other.removeIngredient("Cheddar");
+		System.out.println(other);
+
 	}
 }

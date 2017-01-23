@@ -19,7 +19,7 @@ public class Main {
 					bufferedStream.close();
 		} finally {}
 	
- 	testParse();		
+ 	//testParse();		
 	}
 	
 	public static void testParse() {

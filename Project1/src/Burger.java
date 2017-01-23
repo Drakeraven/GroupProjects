@@ -167,14 +167,10 @@ public class Burger {
 			//System.out.println(workingBurger);
 			//System.out.println(modelBurger.get(ingLocation));
 			while (notPlaced) { 
-				//int ingLocation = modelBurger.indexOf(type) - 1;
 				for (int i = 0; i < workingBurger.size(); i++) {
-					//System.out.println(modelBurger.get(ingLocation));
-					if ( workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation)) 
-							|| workingBurger.peek().equalsIgnoreCase("Top Bun") //TODO maybe not an if?
-							|| workingBurger.peek().equalsIgnoreCase("Bottom Bun")
-							) {
-						//System.out.println(workingBurger);
+					if (workingBurger.peek().equalsIgnoreCase("Bottom Bun") 
+							||workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation)) 
+							|| workingBurger.peek().equalsIgnoreCase("Top Bun")) {
 						workingBurger.push(type);
 						notPlaced = false;
 					} else {
@@ -182,6 +178,9 @@ public class Burger {
 					}
 				}
 				ingLocation--;
+				if (ingLocation == -1) {
+					ingLocation++;
+				}
 			}
 			reset(workingBurger);
 		}
@@ -276,13 +275,9 @@ public class Burger {
 //		Burger myBurg = new Burger(true); 
 
 		Burger other = new Burger(false);
-		other.addPatty();
-		other.addPatty();
-		other.changePatties("Chicken");
-		//other.addIngredient("Onions");
-		//other.addCategory("Cheese");
-		other.addIngredient("Mushrooms");
-		//other.removeIngredient("Cheddar");
+		//other.addIngredient("Mushrooms");
+		other.addIngredient("Ketchup");
+		
 		System.out.println(other);
 
 	}

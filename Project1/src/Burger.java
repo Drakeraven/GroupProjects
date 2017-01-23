@@ -25,7 +25,7 @@ public class Burger {
 	private String[] myVeggies = {"Pickle", "Lettuce", "Tomato", "Onions", "Mushrooms"};
 	
 	public Burger(boolean theWorks) { 
-		System.err.println("Burger Created");
+		//System.err.println("Burger Created");
 		
 		myAux = new MyStack<String>();
 		myTopBurger = new MyStack<String>(); 
@@ -144,11 +144,18 @@ public class Burger {
 		//System.out.println(type);
 		if (type.equalsIgnoreCase("Pickle")) {
 			addPickle();
+		} else if (type.equalsIgnoreCase("Pepperjack") 
+				|| type.equalsIgnoreCase("Cheddar")
+				|| type.equalsIgnoreCase("Mozzarella")) {
+			//System.out.println("Sending Cheese: " + type);
+			addCheese(type);			
 		} else if (!(type.equalsIgnoreCase("with") || (type.equalsIgnoreCase("but")))){
 
 			if (this.modelTop.contains(type)) {
 				modelBurger = modelTop;
 				workingBurger = myTopBurger;
+				workingBurger = myTopBurger;
+
 			} else if (this.modelBottom.contains(type)) {
 				modelBurger = modelBottom;
 				workingBurger = myBottomBurger;
@@ -208,6 +215,45 @@ public class Burger {
 		myTopBurger.push("Pickle");
 		reset(myTopBurger);
 	}
+	
+	private void addCheese(String type) {  
+		String below = "xyz"; 
+		String temp = type.toLowerCase();
+		
+//		switch (temp) { 
+//			case "pepperjack": below = "mozzarella";
+//				break;
+//			case "mozzarella": below = "cheddar";
+//				break;
+//			case "cheddar": below = modelBottom.get(4);
+//		}
+		
+		//System.out.println("Type: " + type);
+		
+		if (type.equalsIgnoreCase("pepperjack")) { 
+			while (!(myBottomBurger.peek().equalsIgnoreCase("mozzarella")
+				|| myBottomBurger.peek().equalsIgnoreCase("cheddar")
+				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) {
+				myAux.push(myBottomBurger.pop());
+			}
+			myBottomBurger.push("Pepperjack");
+
+		} else if (type.equalsIgnoreCase("mozzarella")) {
+			while (!(myBottomBurger.peek().equalsIgnoreCase("cheddar")
+				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
+				myAux.push(myBottomBurger.pop());
+			}
+			myBottomBurger.push("Mozzarella");
+
+		} else if (type.equalsIgnoreCase("cheddar")) { 
+			while (!(myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
+				myAux.push(myBottomBurger.pop());
+			}
+			myBottomBurger.push("Cheddar");
+		}		
+		reset(myBottomBurger);
+	}
+	
 	private void reset(MyStack<String> theBurger) {
 		while (!myAux.isEmpty()) {
 			theBurger.push(myAux.pop());
@@ -229,13 +275,13 @@ public class Burger {
 	public static void main (String[] theArgs) { 
 //		Burger myBurg = new Burger(true); 
 
-		
 		Burger other = new Burger(false);
 		other.addPatty();
 		other.addPatty();
 		other.changePatties("Chicken");
 		//other.addIngredient("Onions");
-		other.addCategory("Cheese");
+		//other.addCategory("Cheese");
+		other.addIngredient("Mushrooms");
 		//other.removeIngredient("Cheddar");
 		System.out.println(other);
 

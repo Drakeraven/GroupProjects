@@ -50,21 +50,6 @@ public class MyStack <T>{
 		 output += "]";
 		 return output;
 	}
-	
-	 //TODO Left this for you Cassie if you need to test shit.
-	public static void main(String[] theArgs) {
-		MyStack<String> testStack = new MyStack<String>();
-		
-		testStack.push("put on first.");
-		testStack.push("put on second.");
-		testStack.pop();
-		testStack.push("Should be left if pop is fine.");
-		System.out.println(testStack);
-		System.out.println(testStack.topOfStack.myObject.toString());
-		System.out.println(testStack.size);
-		if(testStack.isEmpty())
-				System.out.println("this bich empty yeet"); 
-	}
 	 
 	private class Nodes<AnyType> { 
 		

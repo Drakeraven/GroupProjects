@@ -234,30 +234,6 @@ public class Burger {
 		}
 		reset(myBottomBurger);
 	}
-		
-//		if (type.equalsIgnoreCase("pepperjack")) { 
-//			while (!(myBottomBurger.peek().equalsIgnoreCase("mozzarella")
-//				|| myBottomBurger.peek().equalsIgnoreCase("cheddar")
-//				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) {
-//				myAux.push(myBottomBurger.pop());
-//			}
-//			myBottomBurger.push("Pepperjack");
-//
-//		} else if (type.equalsIgnoreCase("mozzarella")) {
-//			while (!(myBottomBurger.peek().equalsIgnoreCase("cheddar")
-//				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
-//				myAux.push(myBottomBurger.pop());
-//			}
-//			myBottomBurger.push("Mozzarella");
-//
-//		} else if (type.equalsIgnoreCase("cheddar")) { 
-//			while (!(myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
-//				myAux.push(myBottomBurger.pop());
-//			}
-//			myBottomBurger.push("Cheddar");
-//		}		
-//		reset(myBottomBurger);
-//	}
 	
 	private void reset(MyStack<String> theBurger) {
 		while (!myAux.isEmpty()) {

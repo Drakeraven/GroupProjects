@@ -13,8 +13,6 @@ public class Burger {
 	private List<String> modelTop = new ArrayList<>(Arrays.asList("Pickle", "Top Bun", 
 			"Mayonnaise", "Baron-Sauce", "Lettuce", "Tomato", "Onions"));
 	
-//	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Pepperjack", "Mozzarella", "Cheddar", "Beef", "Mushrooms", 
-//			"Mustard", "Ketchup", "Bottom Bun"));
 	private List<String> modelBottom = new ArrayList<>(Arrays.asList("Bottom Bun", "Ketchup", "Mustard", "Mushrooms", 
 			"Beef", "Cheddar", "Mozzarella", "Pepperjack"));
 	
@@ -25,7 +23,6 @@ public class Burger {
 	private String[] myVeggies = {"Pickle", "Lettuce", "Tomato", "Onions", "Mushrooms"};
 	
 	public Burger(boolean theWorks) { 
-		//System.err.println("Burger Created");
 		
 		myAux = new MyStack<String>();
 		myTopBurger = new MyStack<String>(); 
@@ -35,7 +32,7 @@ public class Burger {
 			for (int i = 0; i < modelTop.size(); i++) {
 				myTopBurger.push(modelTop.get(i));
 			}
-			for (int i = 0; i < modelBottom.size(); i++) {  //TODO Flipped this along with the modelBottom.
+			for (int i = 0; i < modelBottom.size(); i++) { 
 				myBottomBurger.push(modelBottom.get(i));
 			}
 		} else { 
@@ -68,7 +65,7 @@ public class Burger {
 		}
 		reset(myTopBurger);	
 		
-		modelBottom.set(4, pattyType); //TODO THERE YOU ARE 
+		modelBottom.set(4, pattyType); 
 		while (!myBottomBurger.isEmpty()) { 
 			if (myBottomBurger.peek().equalsIgnoreCase("Beef")
 					|| myBottomBurger.peek().equalsIgnoreCase("Chicken")
@@ -110,14 +107,12 @@ public class Burger {
 		}
 
 		for (int i = 0; i < category.length; i++){
-			//System.out.println(category[i] + " To Add");
 			addIngredient(category[i]);
 		}
 		
 	}
 	
 	public void removeCategory(String type) {
-		//for items in category sent to removeIngredient
 		String[] category = {""}; 
 		String temp = type.toLowerCase();
 		
@@ -139,15 +134,12 @@ public class Burger {
 	public void addIngredient(String type) {
 		MyStack<String> workingBurger = null;
 		List<String> modelBurger = null ;
-		boolean notPlaced = true;
-		
-		//System.out.println(type);
+
 		if (type.equalsIgnoreCase("Pickle")) {
 			addPickle();
 		} else if (type.equalsIgnoreCase("Pepperjack") 
 				|| type.equalsIgnoreCase("Cheddar")
 				|| type.equalsIgnoreCase("Mozzarella")) {
-			//System.out.println("Sending Cheese: " + type);
 			addCheese(type);			
 		} else if (!(type.equalsIgnoreCase("with") || (type.equalsIgnoreCase("but")))){
 
@@ -161,36 +153,39 @@ public class Burger {
 				workingBurger = myBottomBurger;
 			}
 			
-			int ingLocation = modelBurger.indexOf(type) - 1;
-			
-			//System.out.println(modelBurger);
-			//System.out.println(workingBurger);
-			//System.out.println(modelBurger.get(ingLocation));
-			while (notPlaced) { 
-				for (int i = 0; i < workingBurger.size(); i++) {
-					if (workingBurger.peek().equalsIgnoreCase("Bottom Bun") 
-							||workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation)) 
-							|| workingBurger.peek().equalsIgnoreCase("Top Bun")) {
-						workingBurger.push(type);
-						notPlaced = false;
-					} else {
-						myAux.push(workingBurger.pop());
-					}
-				}
-				ingLocation--;
-				if (ingLocation == -1) {
-					ingLocation++;
+			addIngredient(modelBurger, workingBurger, type);
+			}
+	}
+	
+	
+	private void addIngredient(List<String> modelBurger, MyStack<String> workingBurger, String type) {
+		int ingLocation = modelBurger.indexOf(type) - 1;
+		boolean notPlaced = true;
+		
+		while (notPlaced) { 
+			for (int i = 0; i < workingBurger.size(); i++) {
+				if (workingBurger.peek().equalsIgnoreCase("Bottom Bun") 
+						||workingBurger.peek().equalsIgnoreCase(modelBurger.get(ingLocation)) 
+						|| workingBurger.peek().equalsIgnoreCase("Top Bun")) {
+					workingBurger.push(type);
+					notPlaced = false;
+					break;
+				} else {
+					myAux.push(workingBurger.pop());
 				}
 			}
-			reset(workingBurger);
+			ingLocation--;
+			if (ingLocation == -1 && modelBurger.equals(modelBottom)) {
+				ingLocation++;
+			}
 		}
+		reset(workingBurger);
 	}
 	
 	public void removeIngredient(String type) {
 		//find the item in the stack, pop
 		MyStack<String> temp;
 		if (!type.equalsIgnoreCase("but")) {
-			//System.out.println("Remove: " + type);
 			if (modelTop.contains(type)) {
 				temp = myTopBurger; 
 			} else {
@@ -216,42 +211,53 @@ public class Burger {
 	}
 	
 	private void addCheese(String type) {  
-		String below = "xyz"; 
-		String temp = type.toLowerCase();
+		boolean notPlaced = true;
+		int ingLocation = modelBottom.indexOf(type) - 1;
 		
-//		switch (temp) { 
-//			case "pepperjack": below = "mozzarella";
-//				break;
-//			case "mozzarella": below = "cheddar";
-//				break;
-//			case "cheddar": below = modelBottom.get(4);
-//		}
-		
-		//System.out.println("Type: " + type);
-		
-		if (type.equalsIgnoreCase("pepperjack")) { 
-			while (!(myBottomBurger.peek().equalsIgnoreCase("mozzarella")
-				|| myBottomBurger.peek().equalsIgnoreCase("cheddar")
-				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) {
-				myAux.push(myBottomBurger.pop());
+		while (notPlaced) { 
+			for (int i = 0; i < myBottomBurger.size(); i++) {
+				if (myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(ingLocation)) 
+						|| myBottomBurger.peek().equalsIgnoreCase("Beef")
+						|| myBottomBurger.peek().equalsIgnoreCase("Chicken")
+						|| myBottomBurger.peek().equalsIgnoreCase("Veggie")) {
+					myBottomBurger.push(type);
+					notPlaced = false;
+					break;
+				} else {
+					myAux.push(myBottomBurger.pop());
+				}
 			}
-			myBottomBurger.push("Pepperjack");
-
-		} else if (type.equalsIgnoreCase("mozzarella")) {
-			while (!(myBottomBurger.peek().equalsIgnoreCase("cheddar")
-				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
-				myAux.push(myBottomBurger.pop());
+			ingLocation--;
+			if (ingLocation == -1) {
+				ingLocation++;
 			}
-			myBottomBurger.push("Mozzarella");
-
-		} else if (type.equalsIgnoreCase("cheddar")) { 
-			while (!(myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
-				myAux.push(myBottomBurger.pop());
-			}
-			myBottomBurger.push("Cheddar");
-		}		
+		}
 		reset(myBottomBurger);
 	}
+		
+//		if (type.equalsIgnoreCase("pepperjack")) { 
+//			while (!(myBottomBurger.peek().equalsIgnoreCase("mozzarella")
+//				|| myBottomBurger.peek().equalsIgnoreCase("cheddar")
+//				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) {
+//				myAux.push(myBottomBurger.pop());
+//			}
+//			myBottomBurger.push("Pepperjack");
+//
+//		} else if (type.equalsIgnoreCase("mozzarella")) {
+//			while (!(myBottomBurger.peek().equalsIgnoreCase("cheddar")
+//				|| myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
+//				myAux.push(myBottomBurger.pop());
+//			}
+//			myBottomBurger.push("Mozzarella");
+//
+//		} else if (type.equalsIgnoreCase("cheddar")) { 
+//			while (!(myBottomBurger.peek().equalsIgnoreCase(modelBottom.get(4)))) { 
+//				myAux.push(myBottomBurger.pop());
+//			}
+//			myBottomBurger.push("Cheddar");
+//		}		
+//		reset(myBottomBurger);
+//	}
 	
 	private void reset(MyStack<String> theBurger) {
 		while (!myAux.isEmpty()) {
@@ -263,22 +269,7 @@ public class Burger {
 		//add something to put the top and bottom together
 		while(!myTopBurger.isEmpty()){
 			myBottomBurger.push(myTopBurger.pop()); 
-		}
-		
-		//System.err.println(myTopBurger);
-		
+		}		
 		return myBottomBurger.toString(); 
-	}
-	
-	//Testing purposes 
-	public static void main (String[] theArgs) { 
-//		Burger myBurg = new Burger(true); 
-
-		Burger other = new Burger(false);
-		//other.addIngredient("Mushrooms");
-		other.addIngredient("Ketchup");
-		
-		System.out.println(other);
-
 	}
 }

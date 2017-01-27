@@ -1,4 +1,11 @@
-
+/**
+ * Stephanie Day
+ * Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Based off textbook examples
+ * of listNode, listStack by
+ * Mark Allen Weiss
+ */
 public class MyStack <T>{
 	
 	/** The Linked List Node at the top of the stack.*/

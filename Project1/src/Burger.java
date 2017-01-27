@@ -1,3 +1,9 @@
+/**
+ * Stephanie Day
+ * Cassie Renz
+ * TCSS 342 - Winter 2017
+ */
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -125,7 +131,6 @@ public class Burger {
 		}
 		
 		for (int i = 0; i < category.length; i++){
-			//System.out.println("Sent: " + category[i]);
 			removeIngredient(category[i]);
 		}
 	}
@@ -242,7 +247,6 @@ public class Burger {
 	}
 	
 	public String toString() {
-		//add something to put the top and bottom together
 		while(!myTopBurger.isEmpty()){
 			myBottomBurger.push(myTopBurger.pop()); 
 		}		

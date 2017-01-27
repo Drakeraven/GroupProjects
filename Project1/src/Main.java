@@ -1,3 +1,9 @@
+/**
+ * Stephanie Day
+ * Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Main provided by professor.
+ */
 import java.io.*;
 
 public class Main {
@@ -33,13 +39,8 @@ public class Main {
 		String[] words = line.split(" ");
 		Burger burger;
 		
-//		for(int i = 0; i < words.length; i++) {
-//			System.out.println("|"+ words[i]+"|");
-//		}
-		
 		boolean baronBurger = words[0].equals("Baron") || words[Math.min(1, words.length-1)].equals("Baron") || words[Math.min(2, words.length-1)].equals("Baron");
 		burger = new Burger(baronBurger);
-//		System.out.println(baronBurger);
 		if(words[0].equals("Double"))
 			burger.addPatty();
 		if(words[0].equals("Triple")){
@@ -56,7 +57,7 @@ public class Main {
 		int but = 0;
 		for(int i = 0; i < words.length; i++) {
 
-			if(words[i].equals("with")) with = i; // TODO fixed the with being sent.
+			if(words[i].equals("with")) with = i; 
 			if(words[i].equals("but")) but = i;
 
 		}
@@ -65,7 +66,6 @@ public class Main {
 			int end = words.length;
 			if(but > 0) end = but;
 			for(int i = with; i < end; i++) {
-				//System.out.println(words[i] + " - parse sent");
 				boolean cat = isCategory(words[i]);
 				if(cat){
 					if (baronBurger) 
@@ -83,7 +83,6 @@ public class Main {
 		if(but > 0) {
 			int end = words.length;
 			for(int i = but; i < end; i++) {
-//				System.out.println(words[i]);
 				if (baronBurger) 
 					burger.addIngredient(words[i]); 
 				else 

@@ -59,7 +59,7 @@ public class CodingTree {
 	}
 	
 	/**
-	 * For Testing.
+	 * For Testing tree operations.
 	 * @param args
 	 */
 	public static void main(String[] args) {

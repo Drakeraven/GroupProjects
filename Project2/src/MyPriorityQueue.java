@@ -4,7 +4,7 @@ public class MyPriorityQueue{
  private ArrayList<CharacterNode> myDataStructure;
  
 	public MyPriorityQueue() {
-		// TODO Auto-generated constructor stub
+		// TODO Fix!!
 	}
 
 	public CharacterNode deleteMin(CharacterNode theNode) { //TODO nodes! 

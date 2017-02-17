@@ -70,6 +70,7 @@ public class CharacterNode implements Comparable<CharacterNode>{
 		return myRightChild;
 	}
 	
+	//TODO may not need.
 	@Override
 	public boolean equals(Object other) {
 		boolean result = false;

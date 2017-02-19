@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class CodingTree {
 	
-	public Map<Character, String> codes;
+	public Map<Character, String> codes = new HashMap<Character, String>();
 	public String bits;
 	private PriorityQueue<CharacterNode> myInput;
 	private CharacterNode myRoot;
@@ -53,13 +53,16 @@ public class CodingTree {
 	
 	//Added 2/19 - Adds codes + character to the CODES hashmap
 	private void outputCodes(CharacterNode key){ 
-		codes = new HashMap<Character, String>();
 		if (key != null) { 
-			System.out.println("My key: " + key.getLetter() + " My value: " + key.getBinary());
-			codes.put(key.getLetter(), key.getBinary());
+			if (key.getLetter() != '\0'){
+				System.out.println("My key: " + key.getLetter() + " My value: " + key.getBinary());
+				codes.put(key.getLetter(), key.getBinary());
+				//System.out.println("Is the map empty?  " + codes.isEmpty());
+			}
 			outputCodes(key.getLeftChild());
 			outputCodes(key.getRightChild());
 		}
+		//System.out.println("Is the map empty?  " + codes.isEmpty());
 	}
 	
 	public void printHuffmanTree(CharacterNode key) {

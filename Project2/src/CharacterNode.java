@@ -12,7 +12,7 @@ public class CharacterNode implements Comparable<CharacterNode>{
 	 * @param theRightChild What will be the Right Child (A letter).
 	 */
 	public CharacterNode(CharacterNode theLeftChild, CharacterNode theRightChild) {
-		myLetter = '0';
+		myLetter = '\0';
 		myLeftChild = theLeftChild;
 		myRightChild = theRightChild;
 		myCount = theLeftChild.getCount() + theRightChild.getCount();
@@ -98,6 +98,8 @@ public class CharacterNode implements Comparable<CharacterNode>{
 		Output += myLetter;
 		Output += ":";
 		Output += myCount;
+		Output += ": ";
+		Output += getBinary();
 		
 		return Output;
 	}

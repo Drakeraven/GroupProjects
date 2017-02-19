@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -35,13 +36,17 @@ public class Main {
 		
 		//TODO: Output the codes to a text file.  
 		
+		System.out.println("Is the map empty?  " + output.isEmpty());
+		
+		
 		try{
-		    File fileTwo=new File("output.txt");
-		    FileOutputStream fos = new FileOutputStream(fileTwo);
+		    File outputFile = new File("output.txt");
+		    FileOutputStream fos = new FileOutputStream(outputFile);
 	        PrintWriter pw = new PrintWriter(fos);
-
+	        
+	        pw.print("{");
 	        for(Entry<Character, String> m : output.entrySet()){
-	            pw.println(m.getKey()+"="+m.getValue());
+	        	pw.print(m.getKey()+"="+m.getValue() + ", ");
 	            System.out.println("My key: " + m.getKey() + " My value: " + m.getValue());
 	        }
 

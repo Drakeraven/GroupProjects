@@ -1,6 +1,8 @@
 Burger
-Double Baron Burger
-Triple Chicken Burger with Onions Cheese but Cheddar
-Baron Burger with no Veggies Sauce but Baron-Sauce
-Baron Burger with no Veggies Cheese Sauce but Cheddar
+Double Baron Burger with Veggies
+Triple Chicken Burger with Mustard Cheese but Cheddar
+Baron Burger with no Cheese Sauce but Baron-Sauce
+Baron Burger with no Veggies Cheese Sauce but Cheddar Ketchup
 Burger with Veggies Cheese Sauce but Mustard
+Double Veggie Baron Burger
+Triple Veggie Burger with Veggies but Mushrooms

@@ -47,7 +47,19 @@ public class CodingTree {
 		}
 		System.out.println(myInput);
 		myRoot = input.peek();
+		outputCodes(myRoot);
 		printHuffmanTree(myRoot);
+	}
+	
+	//Added 2/19 - Adds codes + character to the CODES hashmap
+	private void outputCodes(CharacterNode key){ 
+		codes = new HashMap<Character, String>();
+		if (key != null) { 
+			System.out.println("My key: " + key.getLetter() + " My value: " + key.getBinary());
+			codes.put(key.getLetter(), key.getBinary());
+			outputCodes(key.getLeftChild());
+			outputCodes(key.getRightChild());
+		}
 	}
 	
 	public void printHuffmanTree(CharacterNode key) {

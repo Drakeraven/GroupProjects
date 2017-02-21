@@ -62,11 +62,10 @@ public class CodingTree {
 		
 		if (num == 0) {
 			tempBin += "0";
-			key.setBinary(tempBin);
 		} else if (num == 1) { 
 			tempBin += "1";
-			key.setBinary(tempBin);
 		}
+		key.setBinary(tempBin);
 		 
 		generateBinary(key.getLeftChild(), 0, tempBin);
 		

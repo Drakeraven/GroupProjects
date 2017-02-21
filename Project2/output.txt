@@ -1,1 +1,1 @@
-{ =null, A=null, B=null, S=null, D=null, H=null, I=null, N=null, 
+{ =00, A=11, B=0110, S=0100, D=0101, H=01111, I=01110, N=10}

@@ -34,25 +34,16 @@ public class Main {
 		myTree = new CodingTree(myText.toString());
 		output = myTree.codes;
 		
-		//TODO: Output the codes to a text file.  
-		
 		System.out.println("Is the map empty?  " + output.isEmpty());
-		
-		
+
 		try{
 		    File outputFile = new File("output.txt");
-		    FileOutputStream fos = new FileOutputStream(outputFile);
-	        PrintWriter pw = new PrintWriter(fos);
-	        
-	        pw.print("{");
-	        for(Entry<Character, String> m : output.entrySet()){
-	        	pw.print(m.getKey()+"="+m.getValue() + ", ");
-	            System.out.println("My key: " + m.getKey() + " My value: " + m.getValue());
-	        }
+	        PrintWriter pw = new PrintWriter(outputFile);
 
+	        pw.println(output.toString());
 	        pw.flush();
 	        pw.close();
-	        fos.close();
+
 		    }catch(Exception e){}
 		
 		//TODO: Output the compressed message to a binary file.  

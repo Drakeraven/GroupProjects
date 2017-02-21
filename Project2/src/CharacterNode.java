@@ -46,8 +46,13 @@ public class CharacterNode implements Comparable<CharacterNode>{
 	 * Builds the Binary code of the particular node.
 	 * @param bit Bit value to be tacked on to the node, 0 or 1. 
 	 */
-	public void setBinary(char bit) {
-		myBinary += bit;
+	public void setBinary(String bit) {
+		
+		if (myBinary == null) {
+			myBinary = bit;
+		} else { 
+			myBinary += bit;
+		}
 	}
 	
 	/**

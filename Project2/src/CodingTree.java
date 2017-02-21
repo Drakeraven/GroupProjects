@@ -47,8 +47,30 @@ public class CodingTree {
 		}
 		System.out.println(myInput);
 		myRoot = input.peek();
+		generateBinary(myRoot, 2, "");
 		outputCodes(myRoot);
 		printHuffmanTree(myRoot);
+	}
+	
+	private void generateBinary(CharacterNode key, int num, String bin) { 
+		int temp = num;
+		String tempBin = bin;
+		
+		if(key == null){
+			return;
+		}
+		
+		if (num == 0) {
+			tempBin += "0";
+			key.setBinary(tempBin);
+		} else if (num == 1) { 
+			tempBin += "1";
+			key.setBinary(tempBin);
+		}
+		 
+		generateBinary(key.getLeftChild(), 0, tempBin);
+		
+		generateBinary(key.getRightChild(), 1, tempBin);
 	}
 	
 	//Added 2/19 - Adds codes + character to the CODES hashmap

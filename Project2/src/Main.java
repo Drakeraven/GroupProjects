@@ -20,7 +20,7 @@ public class Main {
 		FileReader inputStream = null;
 		
 		try {
-				inputStream = new FileReader("annabanana.txt");
+				inputStream = new FileReader("sameLetterTest.txt");
 				BufferedReader bufferedStream = new BufferedReader(inputStream);
 				String line;
 				while ((line = bufferedStream.readLine()) != null) {
@@ -48,6 +48,9 @@ public class Main {
 		
 		//TODO: Output the compressed message to a binary file.  
 		//TODO: Display the size of the compressed text, compression and run time statistics
+		
+		//TODO: Problem with using a file with only one character, refer to sameLetterTest for example
+		//TODO: Problem does not occur when more than one character is present in file
 		
 	}
 

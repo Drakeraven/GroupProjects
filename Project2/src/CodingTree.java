@@ -11,10 +11,11 @@ public class CodingTree {
 
 	public CodingTree(String Message) {
 		codes = new HashMap<Character, String>();
-		bits = null;
+		bits = "";
 		myInput = new PriorityQueue<CharacterNode>();
 		generateFrequencies(Message);
 		huffmanTree(myInput);
+		compressMessage(Message);
 	}
 	
 	/**
@@ -94,13 +95,23 @@ public class CodingTree {
 		}
 	}
 	
+	public void compressMessage(String message) {
+		
+		for (char eachChar : message.toCharArray()) {
+			bits += codes.get(eachChar);
+		}
+	}
+	
+	public String getEncoding() {
+		return bits;
+	}
 	/**
 	 * For Testing tree operations.
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		CodingTree test = new CodingTree("ANNA HAS A BANANA IN A BANDANA");
-		
+
 	}
 
 }

@@ -20,7 +20,7 @@ public class Main {
 		FileReader inputStream = null;
 		
 		try {
-				inputStream = new FileReader("sameLetterTest.txt");
+				inputStream = new FileReader("annabanana.txt");
 				BufferedReader bufferedStream = new BufferedReader(inputStream);
 				String line;
 				while ((line = bufferedStream.readLine()) != null) {
@@ -37,10 +37,19 @@ public class Main {
 		System.out.println("Is the map empty?  " + output.isEmpty());
 
 		try{
-		    File outputFile = new File("output.txt");
+		    File outputFile = new File("codes.txt");
 	        PrintWriter pw = new PrintWriter(outputFile);
 
 	        pw.println(output.toString());
+	        pw.flush();
+	        pw.close();
+		    }catch(Exception e){}
+		
+		try{
+		    File compFile = new File("compressed.txt");
+	        PrintWriter pw = new PrintWriter(compFile);
+
+	        pw.println(myTree.getEncoding());
 	        pw.flush();
 	        pw.close();
 

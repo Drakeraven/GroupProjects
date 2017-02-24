@@ -1,3 +1,12 @@
+/**
+ * Stephanie Day stephd27
+ * Cassie Renz	renzc
+ * TCSS 342 - Winter 2017
+ * Based off textbook examples
+ * of listNode, listStack by
+ * Mark Allen Weiss
+ */
+
 public class CharacterNode implements Comparable<CharacterNode>{
 	
 	private final char myLetter;

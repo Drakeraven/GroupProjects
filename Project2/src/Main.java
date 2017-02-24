@@ -1,16 +1,20 @@
+/**
+ * Stephanie Day stephd27
+ * Cassie Renz	renzc
+ * TCSS 342 - Winter 2017
+ * Based off textbook examples
+ * of listNode, listStack by
+ * Mark Allen Weiss
+ */
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Main {
 
@@ -18,7 +22,7 @@ public class Main {
 		Map<Character, String> output;
 		CodingTree myTree;
 		StringBuilder myText = new StringBuilder();
-		String fileName = "sameLetterTest.txt";
+		String fileName = "WarAndPeace.txt";
 		double inSize, outSize; 
 		
 		long startTime = System.nanoTime();
@@ -71,10 +75,11 @@ public class Main {
 
 		if(myIn.exists() && myOut.exists()){
 			inSize = myIn.length();
-			outSize = myOut.length();
+			outSize = myOut.length() / 8.0;
 			//divide the compressed by 8 since it's outputting in binary
+			System.out.println(inSize + " " + outSize + " " + (inSize - outSize));
 			System.out.println("Uncompressed file size: " + intFormat.format(inSize) + " bytes \nCompressed file size: " 
-								+ intFormat.format(outSize/8) + " bytes \nCompression ratio: " + decFormat.format(inSize/outSize * 100) + "%\n");
+								+ intFormat.format(outSize) + " bytes \nCompression ratio: " + decFormat.format(outSize/inSize * 100) + "%\n");
 			
 		}
 		

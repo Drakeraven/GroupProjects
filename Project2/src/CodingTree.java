@@ -1,3 +1,9 @@
+/**
+ * Stephanie Day stephd27
+ * Cassie Renz	renzc
+ * TCSS 342 - Winter 2017
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -111,14 +117,6 @@ public class CodingTree {
 	
 	public String getEncoding() {
 		return bits;
-	}
-	/**
-	 * For Testing tree operations.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		CodingTree test = new CodingTree("ANNA HAS A BANANA IN A BANDANA");
-
 	}
 
 }

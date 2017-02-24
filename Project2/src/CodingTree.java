@@ -43,8 +43,12 @@ public class CodingTree {
 	}
 	
 	private void huffmanTree(PriorityQueue<CharacterNode> input) {
-		while(input.size() > 1) {
-			input.add(new CharacterNode(input.poll(), input.poll()));
+		if (input.size() == 1) { 
+			input.add(new CharacterNode(null, null));
+		} else {
+			while(input.size() > 1) {
+				input.add(new CharacterNode(input.poll(), input.poll()));
+			}
 		}
 		System.out.println(myInput);
 		myRoot = input.peek();

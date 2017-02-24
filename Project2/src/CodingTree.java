@@ -43,12 +43,8 @@ public class CodingTree {
 	}
 	
 	private void huffmanTree(PriorityQueue<CharacterNode> input) {
-		if (input.size() == 1) { 
-			input.add(new CharacterNode(null, null));
-		} else {
-			while(input.size() > 1) {
-				input.add(new CharacterNode(input.poll(), input.poll()));
-			}
+		while(input.size() > 1) {
+			input.add(new CharacterNode(input.poll(), input.poll()));
 		}
 		System.out.println(myInput);
 		myRoot = input.peek();
@@ -61,20 +57,25 @@ public class CodingTree {
 		int temp = num;
 		String tempBin = bin;
 		
-		if(key == null){
-			return;
-		}
+		if(myInput.size() == 1) { 
+			key.setBinary("1");
+		} else {
 		
-		if (num == 0) {
-			tempBin += "0";
-		} else if (num == 1) { 
-			tempBin += "1";
+			if(key == null){
+				return;
+			}
+			
+			if (num == 0) {
+				tempBin += "0";
+			} else if (num == 1) { 
+				tempBin += "1";
+			}
+			key.setBinary(tempBin);
+			 
+			generateBinary(key.getLeftChild(), 0, tempBin);
+			
+			generateBinary(key.getRightChild(), 1, tempBin);
 		}
-		key.setBinary(tempBin);
-		 
-		generateBinary(key.getLeftChild(), 0, tempBin);
-		
-		generateBinary(key.getRightChild(), 1, tempBin);
 	}
 	
 	//Added 2/19 - Adds codes + character to the CODES hashmap

@@ -16,7 +16,7 @@ public class Main {
 		Map<Character, String> output;
 		CodingTree myTree;
 		StringBuilder myText = new StringBuilder();
-		String fileName = "annabanana.txt";
+		String fileName = "sameLetterTest.txt";
 		double inSize, outSize; 
 		
 		long startTime = System.nanoTime();
@@ -28,8 +28,8 @@ public class Main {
 				BufferedReader bufferedStream = new BufferedReader(inputStream);
 				String line;
 				while ((line = bufferedStream.readLine()) != null) {
-					//System.out.print("Line read in: ");
-					//System.out.println(line + "\n"); // useful for debugging
+					System.out.print("Line read in: ");
+					System.out.println(line + "\n"); // useful for debugging
 					myText.append(line);
 				}
 					bufferedStream.close();

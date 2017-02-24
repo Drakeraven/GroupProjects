@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -16,7 +18,7 @@ public class Main {
 		Map<Character, String> output;
 		CodingTree myTree;
 		StringBuilder myText = new StringBuilder();
-		String fileName = "WarAndPeace.txt";
+		String fileName = "omnilingual.txt";
 		double inSize, outSize; 
 		
 		long startTime = System.nanoTime();
@@ -63,19 +65,22 @@ public class Main {
 		
 		File myIn = new File(fileName);
 		File myOut =new File("compressed.txt");
+		
+		NumberFormat decFormat = new DecimalFormat("#0.00");
+		NumberFormat intFormat = new DecimalFormat("#0");
 
 		if(myIn.exists() && myOut.exists()){
 			inSize = myIn.length();
 			outSize = myOut.length();
 			//divide the compressed by 8 since it's outputting in binary
-			System.out.println("Uncompressed file size: " + inSize + "bytes \nCompressed file size: " 
-								+ (outSize / 8) + "bytes \nCompression ratio: " + inSize/outSize * 100 + "%\n");
+			System.out.println("Uncompressed file size: " + intFormat.format(inSize) + " bytes \nCompressed file size: " 
+								+ intFormat.format(outSize/8) + " bytes \nCompression ratio: " + decFormat.format(inSize/outSize * 100) + "%\n");
 			
 		}
 		
 		long endTime = System.nanoTime(); 
-		double elapsedTime = endTime - (startTime / 1000000000.0);
-		System.out.println("Time to compress: " + elapsedTime + " seconds");
+		double elapsedTime = (endTime - startTime) / 1000000.0;
+		System.out.println("Time to compress: " + intFormat.format(elapsedTime) + " milliseconds");
 
 		//TODO: Problem with using a file with only one character, refer to sameLetterTest for example
 		//TODO: Problem does not occur when more than one character is present in file

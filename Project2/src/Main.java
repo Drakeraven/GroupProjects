@@ -77,7 +77,7 @@ public class Main {
 			inSize = myIn.length();
 			outSize = myOut.length() / 8.0;
 			//divide the compressed by 8 since it's outputting in binary
-			System.out.println(inSize + " " + outSize + " " + (inSize - outSize));
+			//System.out.println(inSize + " " + outSize + " " + (inSize - outSize));
 			System.out.println("Uncompressed file size: " + intFormat.format(inSize) + " bytes \nCompressed file size: " 
 								+ intFormat.format(outSize) + " bytes \nCompression ratio: " + decFormat.format(outSize/inSize * 100) + "%\n");
 			

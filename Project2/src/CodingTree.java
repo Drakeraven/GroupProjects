@@ -39,14 +39,14 @@ public class CodingTree {
 		for (char eachKey : freq.keySet()) {
 			myInput.add(new CharacterNode(eachKey, freq.get(eachKey)));
 		}
-		System.out.println(myInput);	
+		//System.out.println(myInput);	
 	}
 	
 	private void huffmanTree(PriorityQueue<CharacterNode> input) {
 		while(input.size() > 1) {
 			input.add(new CharacterNode(input.poll(), input.poll()));
 		}
-		System.out.println(myInput);
+		//System.out.println(myInput);
 		myRoot = input.peek();
 		generateBinary(myRoot, 2, "");
 		outputCodes(myRoot);
@@ -57,14 +57,13 @@ public class CodingTree {
 		int temp = num;
 		String tempBin = bin;
 		
-		if(myInput.size() == 1) { 
-			key.setBinary("1");
-		} else {
+		if(key == null){
+			return;
+		}
 		
-			if(key == null){
-				return;
-			}
-			
+		if(key.getLeftChild() == null && key.getRightChild() == null  && num == 2) { 
+			key.setBinary("1");
+		} else {			
 			if (num == 0) {
 				tempBin += "0";
 			} else if (num == 1) { 
@@ -82,7 +81,7 @@ public class CodingTree {
 	private void outputCodes(CharacterNode key){ 
 		if (key != null) { 
 			if (key.getLetter() != '\0'){
-				System.out.println("My key: " + key.getLetter() + " My value: " + key.getBinary());
+				//System.out.println("My key: " + key.getLetter() + " My value: " + key.getBinary());
 				codes.put(key.getLetter(), key.getBinary());
 				//System.out.println("Is the map empty?  " + codes.isEmpty());
 			}
@@ -94,7 +93,7 @@ public class CodingTree {
 	
 	public void printHuffmanTree(CharacterNode key) {
 		if (key != null) {
-			System.out.println(key);
+			//System.out.println(key);
 			printHuffmanTree(key.getLeftChild());
 			printHuffmanTree(key.getRightChild());
 		}

@@ -16,7 +16,7 @@ public class Main {
 		Map<Character, String> output;
 		CodingTree myTree;
 		StringBuilder myText = new StringBuilder();
-		String fileName = "sameLetterTest.txt";
+		String fileName = "WarAndPeace.txt";
 		double inSize, outSize; 
 		
 		long startTime = System.nanoTime();
@@ -28,8 +28,8 @@ public class Main {
 				BufferedReader bufferedStream = new BufferedReader(inputStream);
 				String line;
 				while ((line = bufferedStream.readLine()) != null) {
-					System.out.print("Line read in: ");
-					System.out.println(line + "\n"); // useful for debugging
+					//System.out.print("Line read in: ");
+					//System.out.println(line + "\n"); // useful for debugging
 					myText.append(line);
 				}
 					bufferedStream.close();
@@ -38,7 +38,7 @@ public class Main {
 		myTree = new CodingTree(myText.toString());
 		output = myTree.codes;
 		
-		System.out.println("Is the map empty?  " + output.isEmpty());
+		//System.out.println("Is the map empty?  " + output.isEmpty());
 
 		try{
 		    File outputFile = new File("codes.txt");
@@ -68,7 +68,9 @@ public class Main {
 			inSize = myIn.length();
 			outSize = myOut.length();
 			//divide the compressed by 8 since it's outputting in binary
-			System.out.println("In size: " + inSize + " | Out size: " + (outSize / 8));
+			System.out.println("Uncompressed file size: " + inSize + "bytes \nCompressed file size: " 
+								+ (outSize / 8) + "bytes \nCompression ratio: " + inSize/outSize * 100 + "%\n");
+			
 		}
 		
 		long endTime = System.nanoTime(); 

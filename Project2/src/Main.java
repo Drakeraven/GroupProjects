@@ -18,7 +18,7 @@ public class Main {
 		Map<Character, String> output;
 		CodingTree myTree;
 		StringBuilder myText = new StringBuilder();
-		String fileName = "omnilingual.txt";
+		String fileName = "sameLetterTest.txt";
 		double inSize, outSize; 
 		
 		long startTime = System.nanoTime();

@@ -100,10 +100,13 @@ public class CodingTree {
 	}
 	
 	public void compressMessage(String message) {
-		
+		StringBuilder buffer = new StringBuilder();
 		for (char eachChar : message.toCharArray()) {
-			bits += codes.get(eachChar);
+			buffer.append(codes.get(eachChar));
 		}
+		buffer.trimToSize();
+		bits = buffer.toString();
+		
 	}
 	
 	public String getEncoding() {

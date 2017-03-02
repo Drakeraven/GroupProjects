@@ -7,6 +7,13 @@ import java.util.*;
 public class MyGraph implements Graph {
 	// you will need some private fields to represent the graph
 	// you are also likely to want some private helper methods
+	
+	private Collection<Vertex> myVertex;
+	
+	private Collection<Edge> myEdge;
+	
+	private HashMap<Vertex, ArrayList<Edge>> myMap;
+	
 
 	// YOUR CODE HERE
 
@@ -20,8 +27,22 @@ public class MyGraph implements Graph {
 	 *            a collection of the edges in this graph
 	 */
 	public MyGraph(Collection<Vertex> v, Collection<Edge> e) {
+		myMap = new HashMap<Vertex, ArrayList<Edge>>();
+		if (!checkVertex(v)) { 
+			throw new IllegalArgumentException();
+		}
+		myVertex = v; 
+		
+		if (!checkEdges(e)) { 
+			throw new IllegalArgumentException(); 
+		} 
+		myEdge = e; 
 
-		// YOUR CODE HERE
+		//Check for: 
+		//Edges to/from a vertex that doesn't exist
+		//Negative edge weights
+		//Repeated edge in the same direction with different weights
+		//If vertex/edge with same name/weight, ignore repeated instance
 
 	}
 
@@ -32,9 +53,12 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public Collection<Vertex> vertices() {
-
-		// YOUR CODE HERE
-
+		Collection<Vertex> temp = new ArrayList<Vertex>();
+		Iterator<Vertex> iter = myVertex.iterator();
+		while (iter.hasNext()){
+			temp.add(iter.next()); 
+		} 
+		return temp;
 	}
 
 	/**
@@ -44,9 +68,76 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public Collection<Edge> edges() {
+		Collection<Edge> temp = new ArrayList<Edge>();
+		Iterator<Edge> iter = myEdge.iterator();
+		while (iter.hasNext()){
+			temp.add(iter.next()); 			
+		} 
+		return temp;
+	}
+	
+	/**
+	 * Return the map of vertices and edges of this graph 
+	 * @return 
+	 * @return 
+	 * 
+	 * @return the map of vertices and edges 
+	 */
+	public void printMap() { 
+		System.out.println(myMap.entrySet());
+	}
+	
+	/**
+	 * Checks collection of vertex for improper elements
+	 * 
+	 * @return true if the collection contains proper elements
+	 */
+	private boolean checkVertex(Collection<Vertex> v){
+		//iterate over the vertexes using iterator
+		//for each element, add it to the map
+		if (v.isEmpty()) { 
+			return false;
+		} else { 
+			Vertex temp; 
+			Iterator<Vertex> iter = v.iterator();
+			while (iter.hasNext()){	
+				temp = iter.next(); 
+				if(!myMap.containsKey(temp)) {
+					myMap.put(new Vertex(temp.getLabel().toLowerCase()), new ArrayList<Edge>());
+				}
+			}	
+			return true;
+		}
+	}
+	
+	/**
+	 * Checks collection of edges for improper elements
+	 * 
+	 * @return true if the collection contains proper elements
+	 */
+	private boolean checkEdges(Collection<Edge> e) {
+		boolean flag = true; 
+		Edge temp; 
+		Iterator<Edge> iter = e.iterator();
+		
+		//iterate over the edges using iterator 
+		//compare from/to to the collection of vertices myVertex
+		//check for same directed edge but different weight
+		if (e.isEmpty()) { 
+			flag = false; 
+		} 	
 
-		// YOUR CODE HERE
-
+		while(iter.hasNext()) { 
+			temp = iter.next();
+			if (myMap.containsKey(temp.getSource()) 
+					&& myMap.containsKey(temp.getDestination()) 
+					&& temp.getWeight() >= 0) {
+				myMap.get(temp.getSource()).add(temp);
+			} else { 
+				flag = false;
+			}
+		}
+		return flag; 		
 	}
 
 	/**
@@ -62,6 +153,7 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public Collection<Vertex> adjacentVertices(Vertex v) {
+		return null;
 
 		// YOUR CODE HERE
 
@@ -82,6 +174,7 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public int edgeCost(Vertex a, Vertex b) {
+		return 0;
 
 		// YOUR CODE HERE
 
@@ -103,10 +196,44 @@ public class MyGraph implements Graph {
 	 *             if a or b does not exist.
 	 */
 	public Path shortestPath(Vertex a, Vertex b) {
+		return null;
 
 		// YOUR CODE HERE (you might comment this out this method while doing
 		// Part 1)
 
+	}
+	
+	public static void main (String[] args) {
+		Vertex vert1 = new Vertex("one");
+		Vertex vert2 = new Vertex("two");
+		
+		ArrayList<Vertex> vert = new ArrayList<Vertex>();
+		vert.add(vert1);
+		vert.add(vert2);
+		//System.out.println(vert);
+		
+		ArrayList<Edge> edge = new ArrayList<Edge>();
+		edge.add(new Edge(vert1, vert2, 5));
+		edge.add(new Edge(vert1, vert2, 6));
+		
+		MyGraph graph = new MyGraph(vert, edge);
+		graph.printMap();
+		
+		HashMap<Vertex, ArrayList<Edge>> test = new HashMap<Vertex, ArrayList<Edge>>();
+		test.put(vert1, new ArrayList<Edge>());
+		test.put(vert2, new ArrayList<Edge>());
+		Edge temp; 
+		Iterator<Edge> iter = edge.iterator();
+		while(iter.hasNext()) { 
+			temp = iter.next();
+			if (test.containsKey(temp.getSource()) 
+					&& test.containsKey(temp.getDestination()) 
+					&& temp.getWeight() >= 0) {
+				test.get(temp.getSource()).add(temp);
+			}
+		}
+		System.out.println(test);
+		
 	}
 
 }

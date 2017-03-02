@@ -69,7 +69,7 @@ public class Edge {
 		return result;
 	}
 
-	// auto-generated: compares all fields
+	// auto-generated: compares all  fields
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

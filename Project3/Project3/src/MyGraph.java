@@ -125,7 +125,8 @@ public class MyGraph implements Graph {
 			if (myMap.containsKey(temp.getSource()) 
 					&& myMap.containsKey(temp.getDestination()) 
 					&& temp.getWeight() >= 0
-					&& !dupEdge(e, temp)) {
+					&& !dupEdge(e, temp)
+					&& temp.getSource() != temp.getDestination()) {
 				myMap.get(temp.getSource()).add(temp);
 			} else { 
 				flag = false;
@@ -165,7 +166,15 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public Collection<Vertex> adjacentVertices(Vertex v) {
-		return null;
+		Collection<Vertex> temp = new ArrayList<Vertex>();
+		if(myMap.containsKey(v)){ 
+			//HAVE TO LOOK FOR THE VERTEX
+			Iterator<Edge> iter = myMap.get(v).iterator();
+			while (iter.hasNext()){
+				temp.add(iter.next().getDestination()); 			
+			} 
+		}
+		return temp;
 
 		// YOUR CODE HERE
 
@@ -186,10 +195,28 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public int edgeCost(Vertex a, Vertex b) {
-		return 0;
-
-		// YOUR CODE HERE
-
+		
+		//FIX THE SELF EDGE PROBLEM
+		int cost = 0; 
+		Collection<Vertex> vert = new ArrayList<Vertex>();
+		Collection<Edge> edge = new ArrayList<Edge>();
+		
+		if(myMap.containsKey(a)) { 
+			vert = adjacentVertices(a);
+			if(vert.contains(b)) { 
+				//look for the edge that has destination as b
+				edge = myMap.get(a);
+				for(Edge e: edge) { 
+					if (e.getDestination().equals(b)) { 
+						cost = e.getWeight();
+					}
+				}
+			}
+		} else { 
+			cost = -1;
+		}
+		
+		return cost; 
 	}
 
 	/**
@@ -232,11 +259,13 @@ public class MyGraph implements Graph {
 		edge.add(new Edge(vert1, vert2, 5));
 		edge.add(new Edge(vert2, vert1, 6));
 		edge.add(new Edge(vert1, vert3, 200000));
-		edge.add(new Edge(vert4, vert4, 0));
 		
 		MyGraph graph = new MyGraph(vert, edge);
 		graph.printMap();
+		System.out.println(graph.edgeCost(vert1, vert2));
 		
+		
+		/**USE THIS TO MESS WITH CHECKVERTEX/EDGE INDEPENDENTLY**/
 //		HashMap<Vertex, ArrayList<Edge>> test = new HashMap<Vertex, ArrayList<Edge>>();
 //		test.put(vert1, new ArrayList<Edge>());
 //		test.put(vert2, new ArrayList<Edge>());

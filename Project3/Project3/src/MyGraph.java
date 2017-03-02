@@ -13,9 +13,6 @@ public class MyGraph implements Graph {
 	private Collection<Edge> myEdge;
 	
 	private HashMap<Vertex, ArrayList<Edge>> myMap;
-	
-
-	// YOUR CODE HERE
 
 	/**
 	 * Creates a MyGraph object with the given collection of vertices and the
@@ -37,12 +34,6 @@ public class MyGraph implements Graph {
 			throw new IllegalArgumentException(); 
 		} 
 		myEdge = e; 
-
-		//Check for: 
-		//Edges to/from a vertex that doesn't exist
-		//Negative edge weights
-		//Repeated edge in the same direction with different weights
-		//If vertex/edge with same name/weight, ignore repeated instance
 
 	}
 
@@ -90,6 +81,7 @@ public class MyGraph implements Graph {
 	/**
 	 * Checks collection of vertex for improper elements
 	 * 
+	 * @param v the collection of vertex objects
 	 * @return true if the collection contains proper elements
 	 */
 	private boolean checkVertex(Collection<Vertex> v){
@@ -113,6 +105,7 @@ public class MyGraph implements Graph {
 	/**
 	 * Checks collection of edges for improper elements
 	 * 
+	 * @param e the collection of edge objects
 	 * @return true if the collection contains proper elements
 	 */
 	private boolean checkEdges(Collection<Edge> e) {
@@ -131,7 +124,8 @@ public class MyGraph implements Graph {
 			temp = iter.next();
 			if (myMap.containsKey(temp.getSource()) 
 					&& myMap.containsKey(temp.getDestination()) 
-					&& temp.getWeight() >= 0) {
+					&& temp.getWeight() >= 0
+					&& !dupEdge(e, temp)) {
 				myMap.get(temp.getSource()).add(temp);
 			} else { 
 				flag = false;
@@ -139,7 +133,25 @@ public class MyGraph implements Graph {
 		}
 		return flag; 		
 	}
-
+	
+	/**
+	 * 
+	 * @param e
+	 * @param edge
+	 * @return
+	 */
+	private boolean dupEdge(Collection<Edge> e, Edge edge) {
+		boolean flag = false;
+		for(Edge temp: e) {
+			if(temp.getSource().equals(edge.getSource())
+					&& temp.getDestination().equals(edge.getDestination())
+					&& temp.getWeight() != edge.getWeight()) { 
+				flag = true;
+			}
+		}
+		return flag;
+	}
+ 
 	/**
 	 * Return a collection of vertices adjacent to a given vertex v. i.e., the
 	 * set of all vertices w where edges v -> w exist in the graph. Return an
@@ -206,33 +218,39 @@ public class MyGraph implements Graph {
 	public static void main (String[] args) {
 		Vertex vert1 = new Vertex("one");
 		Vertex vert2 = new Vertex("two");
+		Vertex vert3 = new Vertex("three");
+		Vertex vert4 = new Vertex("four");
 		
 		ArrayList<Vertex> vert = new ArrayList<Vertex>();
 		vert.add(vert1);
 		vert.add(vert2);
+		vert.add(vert3);
+		vert.add(vert4);
 		//System.out.println(vert);
 		
 		ArrayList<Edge> edge = new ArrayList<Edge>();
 		edge.add(new Edge(vert1, vert2, 5));
-		edge.add(new Edge(vert1, vert2, 6));
+		edge.add(new Edge(vert2, vert1, 6));
+		edge.add(new Edge(vert1, vert3, 200000));
+		edge.add(new Edge(vert4, vert4, 0));
 		
 		MyGraph graph = new MyGraph(vert, edge);
 		graph.printMap();
 		
-		HashMap<Vertex, ArrayList<Edge>> test = new HashMap<Vertex, ArrayList<Edge>>();
-		test.put(vert1, new ArrayList<Edge>());
-		test.put(vert2, new ArrayList<Edge>());
-		Edge temp; 
-		Iterator<Edge> iter = edge.iterator();
-		while(iter.hasNext()) { 
-			temp = iter.next();
-			if (test.containsKey(temp.getSource()) 
-					&& test.containsKey(temp.getDestination()) 
-					&& temp.getWeight() >= 0) {
-				test.get(temp.getSource()).add(temp);
-			}
-		}
-		System.out.println(test);
+//		HashMap<Vertex, ArrayList<Edge>> test = new HashMap<Vertex, ArrayList<Edge>>();
+//		test.put(vert1, new ArrayList<Edge>());
+//		test.put(vert2, new ArrayList<Edge>());
+//		Edge temp; 
+//		Iterator<Edge> iter = edge.iterator();
+//		while(iter.hasNext()) { 
+//			temp = iter.next();
+//			if (test.containsKey(temp.getSource()) 
+//					&& test.containsKey(temp.getDestination()) 
+//					&& temp.getWeight() >= 0) {
+//				test.get(temp.getSource()).add(temp);
+//			}
+//		}
+//		System.out.println(test);
 		
 	}
 

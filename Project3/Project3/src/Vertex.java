@@ -1,10 +1,12 @@
 /**
  * Representation of a graph vertex
  */
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
 	// label attached to this vertex
 	private String label;
-
+	boolean known;
+	int cost;
+	Vertex path; 
 	/**
 	 * Construct a new vertex
 	 * 
@@ -57,6 +59,16 @@ public class Vertex {
 		} else {
 			return label.equals(other.label);
 		}
+	}
+
+	@Override
+	public int compareTo(Vertex other) {
+		if (this.cost < other.cost) {
+			return -1;
+		} else if (this.cost > other.cost) {
+			return 1;
+		}
+		return 0;
 	}
 
 }

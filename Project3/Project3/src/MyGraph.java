@@ -235,15 +235,73 @@ public class MyGraph implements Graph {
 	 *             if a or b does not exist.
 	 */
 	public Path shortestPath(Vertex a, Vertex b) {
+		List<Vertex> result = new LinkedList<Vertex>();
+		if (a.equals(b)) {
+			result.add(a);
+			Path rPath = new Path(result, 0);
+			return rPath;
+		} else {
+			for (Vertex eachV : this.vertices()) {
+				eachV.cost = Integer.MAX_VALUE;
+				eachV.known = false;	
+			}
+			a.cost = 0;
+			PriorityQueue<Vertex> vert = new PriorityQueue<Vertex>(this.vertices());
+			while (!vert.isEmpty()) {
+				Vertex curr = vert.poll();
+				curr.known = true;
+				for ( Vertex eaEdge : this.adjacentVertices(curr)) {
+					if (!eaEdge.known) {
+						if (curr.cost  + this.edgeCost(curr, eaEdge) < eaEdge.cost) {
+							eaEdge.cost = (curr.cost  + this.edgeCost(curr, eaEdge));
+							eaEdge.path = curr;
+						}
+					}
+				}
+			}
+		}
+		
 		return null;
 
-		// YOUR CODE HERE (you might comment this out this method while doing
-		// Part 1)
 
 	}
 	
 	public static void main (String[] args) {
-		Vertex vert1 = new Vertex("one");
+		Vertex vA = new Vertex("A");
+		Vertex vB = new Vertex("B");
+		Vertex vC = new Vertex("C");
+		Vertex vD = new Vertex("D");
+		Vertex vE = new Vertex("E");
+		Vertex vF = new Vertex("F");
+		Vertex vG = new Vertex("G");
+		
+		ArrayList<Vertex> vert = new ArrayList<Vertex>();
+		vert.add(vA);
+		vert.add(vB);
+		vert.add(vC);
+		vert.add(vD);
+		vert.add(vE);
+		vert.add(vF);
+		vert.add(vG);
+		
+		ArrayList<Edge> edge = new ArrayList<Edge>();
+		edge.add(new Edge(vA, vC, 2));
+		edge.add(new Edge(vA, vD, 1));
+		edge.add(new Edge(vB, vA, 2));
+		edge.add(new Edge(vC, vD, 1));
+		edge.add(new Edge(vC, vF, 2));
+		edge.add(new Edge(vD, vB, 5));
+		edge.add(new Edge(vD, vE, 1));
+		edge.add(new Edge(vD, vG, 5));
+		edge.add(new Edge(vD, vF, 6));
+		edge.add(new Edge(vE, vB, 1));
+		edge.add(new Edge(vF, vG, 10));
+		edge.add(new Edge(vG, vE, 3));
+		
+		MyGraph graph = new MyGraph(vert, edge);
+		graph.printMap();
+		
+		/*Vertex vert1 = new Vertex("one");
 		Vertex vert2 = new Vertex("two");
 		Vertex vert3 = new Vertex("three");
 		Vertex vert4 = new Vertex("four");
@@ -256,14 +314,14 @@ public class MyGraph implements Graph {
 		//System.out.println(vert);
 		
 		ArrayList<Edge> edge = new ArrayList<Edge>();
-		edge.add(new Edge(vert1, vert2, 5));
-		edge.add(new Edge(vert2, vert1, 6));
-		edge.add(new Edge(vert1, vert3, 200000));
+		edge.add(new Edge(vert1, vert4, 3000));
+		edge.add(new Edge(vert1, vert2, 6000));
+		edge.add(new Edge(vert2, vert4, 1));
 		
 		MyGraph graph = new MyGraph(vert, edge);
 		graph.printMap();
 		System.out.println(graph.edgeCost(vert1, vert2));
-		
+		*/
 		
 		/**USE THIS TO MESS WITH CHECKVERTEX/EDGE INDEPENDENTLY**/
 //		HashMap<Vertex, ArrayList<Edge>> test = new HashMap<Vertex, ArrayList<Edge>>();

@@ -95,7 +95,7 @@ public class MyGraph implements Graph {
 			while (iter.hasNext()){	
 				temp = iter.next(); 
 				if(!myMap.containsKey(temp)) {
-					myMap.put(new Vertex(temp.getLabel().toLowerCase()), new ArrayList<Edge>());
+					myMap.put(temp, new ArrayList<Edge>());
 				}
 			}	
 			return true;

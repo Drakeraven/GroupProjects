@@ -235,24 +235,26 @@ public class MyGraph implements Graph {
 	 *             if a or b does not exist.
 	 */
 	public Path shortestPath(Vertex a, Vertex b) {
-		LinkedList<Vertex> result = new LinkedList<Vertex>();
 		if (a.equals(b)) {
+			LinkedList<Vertex> result = new LinkedList<Vertex>();
 			result.add(a);
 			Path rPath = new Path(result, 0);
 			return rPath;
 		} else {
-			for (Vertex eachV : this.vertices()) {
+			for (Vertex eachV : myVertex) {
 				eachV.cost = Integer.MAX_VALUE;
 				eachV.known = false;	
 			}
-			a.cost = 0;
-			PriorityQueue<Vertex> vert = new PriorityQueue<Vertex>(this.vertices());
+			localizeV(a).cost = 0;
+			localizeV(a).path = null;
+			PriorityQueue<Vertex> vert = new PriorityQueue<Vertex>(myVertex);
 			while (!vert.isEmpty()) {
 				Vertex curr = vert.poll();
-				curr.known = true;
+				localizeV(curr).known = true;
 				for ( Vertex eaEdge : this.adjacentVertices(curr)) {
+					eaEdge = localizeV(eaEdge);
 					if (!eaEdge.known) {
-						if (curr.cost  + this.edgeCost(curr, eaEdge) <= eaEdge.cost) {
+						if (curr.cost  + this.edgeCost(curr, eaEdge) < eaEdge.cost) {
 							eaEdge.cost = (curr.cost  + this.edgeCost(curr, eaEdge)); 
 							eaEdge.path = curr;
 							vert.remove(eaEdge);
@@ -261,23 +263,46 @@ public class MyGraph implements Graph {
 					}
 				}
 			}
-			if (b.path == null) {
-				return null;
-			} else {
-				int pathSum = 0;
-				while (b!= null) {
-					result.addFirst(b);
-					if (edgeCost(b.path, b) != -1) {
-						pathSum += edgeCost(b.path, b);
-					}
-					b = b.path;
-				}
-				System.out.println(result + ", " + pathSum);
-				return new Path(result, pathSum);
-			}
+			return tracePath(b);
 		}
 	}
 	
+/**
+ * Takes in a passed in Vertex and assures it points to its version in myVertex.	
+ * @param query Vertex to alter
+ * @return MyVertex's copy of query.
+ */
+private Vertex localizeV(Vertex query) {
+	for (Vertex eV : myVertex) {
+		if (eV.equals(query)) {
+			query = eV;
+		}
+	}
+	return query;
+}
+
+/**
+ * Used to return the shortest path calculated by shortestPath
+ * @param b Destination Vertex
+ * @return Path to the destination Vertex.
+ */
+private Path tracePath(Vertex b) {
+	LinkedList<Vertex> result = new LinkedList<Vertex>();
+	b = localizeV(b);
+	if (b.path == null) {
+		return null;
+	} else {
+		int pathSum = 0;
+		while (b!= null) {
+			result.addFirst(b);
+			if (edgeCost(b.path, b) != -1) {
+				pathSum += edgeCost(b.path, b);
+			}
+			b = b.path;
+		}
+		return new Path(result, pathSum);
+	}
+}
 	public static void main (String[] args) {
 		Vertex vA = new Vertex("A");
 		Vertex vB = new Vertex("B");

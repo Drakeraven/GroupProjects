@@ -38,6 +38,17 @@ public class FindPaths {
 			
 			// YOUR CODE HERE: call shortestPath and print
 			// out the result
+			Path output = g.shortestPath(a, b);
+			System.out.println("Shortest Path from " + a.getLabel() + " to " + b.getLabel() + ": ");
+			if (output == null) {
+				System.out.println("Does not exist.");
+			} else {
+				for (Vertex eachVertex : output.vertices) {
+					System.out.print(eachVertex.getLabel() + " ");
+				}
+				System.out.print("\n");
+				System.out.println(output.cost);
+			}
 		}
 	}
 

@@ -235,7 +235,7 @@ public class MyGraph implements Graph {
 	 *             if a or b does not exist.
 	 */
 	public Path shortestPath(Vertex a, Vertex b) {
-		List<Vertex> result = new LinkedList<Vertex>();
+		LinkedList<Vertex> result = new LinkedList<Vertex>();
 		if (a.equals(b)) {
 			result.add(a);
 			Path rPath = new Path(result, 0);
@@ -252,18 +252,30 @@ public class MyGraph implements Graph {
 				curr.known = true;
 				for ( Vertex eaEdge : this.adjacentVertices(curr)) {
 					if (!eaEdge.known) {
-						if (curr.cost  + this.edgeCost(curr, eaEdge) < eaEdge.cost) {
-							eaEdge.cost = (curr.cost  + this.edgeCost(curr, eaEdge));
+						if (curr.cost  + this.edgeCost(curr, eaEdge) <= eaEdge.cost) {
+							eaEdge.cost = (curr.cost  + this.edgeCost(curr, eaEdge)); 
 							eaEdge.path = curr;
+							vert.remove(eaEdge);
+							vert.add(eaEdge);
 						}
 					}
 				}
 			}
+			if (b.path == null) {
+				return null;
+			} else {
+				int pathSum = 0;
+				while (b!= null) {
+					result.addFirst(b);
+					if (edgeCost(b.path, b) != -1) {
+						pathSum += edgeCost(b.path, b);
+					}
+					b = b.path;
+				}
+				System.out.println(result + ", " + pathSum);
+				return new Path(result, pathSum);
+			}
 		}
-		
-		return null;
-
-
 	}
 	
 	public static void main (String[] args) {
@@ -300,6 +312,16 @@ public class MyGraph implements Graph {
 		
 		MyGraph graph = new MyGraph(vert, edge);
 		graph.printMap();
+		graph.shortestPath(vA, vB);
+		System.out.println("A: " + vA.path);
+		System.out.println("B: " + vB.path);
+		System.out.println("C: " + vC.path);
+		System.out.println("D: " + vD.path);
+		System.out.println("E: " + vE.path);
+		System.out.println("F: " + vF.path);
+		System.out.println("G: " + vG.path);
+		
+		
 		
 		/*Vertex vert1 = new Vertex("one");
 		Vertex vert2 = new Vertex("two");

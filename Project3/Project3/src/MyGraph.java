@@ -31,7 +31,7 @@ public class MyGraph implements Graph {
 		myVertex = v; 
 		
 		if (!checkEdges(e)) { 
-			throw new IllegalArgumentException(); 
+			throw new IllegalArgumentException("Invalid Edges."); 
 		} 
 		myEdge = e; 
 

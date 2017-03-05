@@ -10,8 +10,6 @@ public class MyGraph implements Graph {
 	
 	private Collection<Vertex> myVertex;
 	
-	private HashSet<Vertex> tempVertex = new HashSet<Vertex>();
-	
 	private Collection<Edge> myEdge;
 	
 	private HashMap<Vertex, ArrayList<Edge>> myMap;
@@ -35,7 +33,7 @@ public class MyGraph implements Graph {
 		if (!checkEdges(e)) { 
 			throw new IllegalArgumentException("Invalid Edges."); 
 		} 
-		myEdge = e; 
+		//myEdge = e; 
 
 	}
 
@@ -104,17 +102,6 @@ public class MyGraph implements Graph {
 		}
 	}
 	
-	private void addToMap(HashSet<Vertex> v) { 
-		Vertex temp; 
-		Iterator<Vertex> iter = v.iterator();
-		while (iter.hasNext()){	
-			temp = iter.next(); 
-			if(!myMap.containsKey(temp)) {
-				myMap.put(temp, new ArrayList<Edge>());
-			}
-		}	
-	}
-	
 	/**
 	 * Checks collection of edges for improper elements
 	 * 
@@ -125,6 +112,7 @@ public class MyGraph implements Graph {
 		boolean flag = true; 
 		Edge temp; 
 		Iterator<Edge> iter = e.iterator();
+		myEdge = new HashSet<Edge>();
 		
 		//iterate over the edges using iterator 
 		//compare from/to to the collection of vertices myVertex
@@ -141,6 +129,7 @@ public class MyGraph implements Graph {
 					&& !dupEdge(e, temp)
 					&& temp.getSource() != temp.getDestination()) {
 				myMap.get(temp.getSource()).add(temp);
+				myEdge.add(temp);
 			} else { 
 				flag = false;
 			}

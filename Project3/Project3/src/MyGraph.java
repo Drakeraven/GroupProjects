@@ -10,6 +10,8 @@ public class MyGraph implements Graph {
 	
 	private Collection<Vertex> myVertex;
 	
+	private HashSet<Vertex> tempVertex = new HashSet<Vertex>();
+	
 	private Collection<Edge> myEdge;
 	
 	private HashMap<Vertex, ArrayList<Edge>> myMap;
@@ -44,7 +46,7 @@ public class MyGraph implements Graph {
 	 */
 	@Override
 	public Collection<Vertex> vertices() {
-		Collection<Vertex> temp = new ArrayList<Vertex>();
+		Collection<Vertex> temp = new HashSet<Vertex>();
 		Iterator<Vertex> iter = myVertex.iterator();
 		while (iter.hasNext()){
 			temp.add(iter.next()); 
@@ -100,6 +102,17 @@ public class MyGraph implements Graph {
 			}	
 			return true;
 		}
+	}
+	
+	private void addToMap(HashSet<Vertex> v) { 
+		Vertex temp; 
+		Iterator<Vertex> iter = v.iterator();
+		while (iter.hasNext()){	
+			temp = iter.next(); 
+			if(!myMap.containsKey(temp)) {
+				myMap.put(temp, new ArrayList<Edge>());
+			}
+		}	
 	}
 	
 	/**
@@ -305,6 +318,7 @@ private Path tracePath(Vertex b) {
 }
 	public static void main (String[] args) {
 		Vertex vA = new Vertex("A");
+		Vertex vv = new Vertex("A");
 		Vertex vB = new Vertex("B");
 		Vertex vC = new Vertex("C");
 		Vertex vD = new Vertex("D");
@@ -320,6 +334,7 @@ private Path tracePath(Vertex b) {
 		vert.add(vE);
 		vert.add(vF);
 		vert.add(vG);
+		vert.add(vv);
 		
 		ArrayList<Edge> edge = new ArrayList<Edge>();
 		edge.add(new Edge(vA, vC, 2));
@@ -337,6 +352,7 @@ private Path tracePath(Vertex b) {
 		
 		MyGraph graph = new MyGraph(vert, edge);
 		graph.printMap();
+		System.out.println(graph.vertices());
 		graph.shortestPath(vA, vB);
 		System.out.println("A: " + vA.path);
 		System.out.println("B: " + vB.path);

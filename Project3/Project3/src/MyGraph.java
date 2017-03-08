@@ -34,7 +34,6 @@ public class MyGraph implements Graph {
 			throw new IllegalArgumentException("Invalid Edges."); 
 		} 
 		//myEdge = e; 
-
 	}
 
 	/**
@@ -265,7 +264,11 @@ public class MyGraph implements Graph {
 					}
 				}
 			}
-			return tracePath(b);
+			//TODO: FOR TESTING.
+//			for (Vertex eV: myVertex) {
+//				System.out.println(eV.getLabel() + " " + eV.cost +  " " +  eV.path);
+//			} 
+			return tracePath(b, a);
 		}
 	}
 	
@@ -288,109 +291,22 @@ private Vertex localizeV(Vertex query) {
  * @param b Destination Vertex
  * @return Path to the destination Vertex.
  */
-private Path tracePath(Vertex b) {
-	LinkedList<Vertex> result = new LinkedList<Vertex>();
-	b = localizeV(b);
-	if (b.path == null) {
-		return null;
-	} else {
-		int pathSum = 0;
-		while (b!= null) {
-			result.addFirst(b);
-			if (edgeCost(b.path, b) != -1) {
-				pathSum += edgeCost(b.path, b);
-			}
-			b = b.path;
-		}
-		return new Path(result, pathSum);
-	}
-}
-	public static void main (String[] args) {
-		Vertex vA = new Vertex("A");
-		Vertex vv = new Vertex("A");
-		Vertex vB = new Vertex("B");
-		Vertex vC = new Vertex("C");
-		Vertex vD = new Vertex("D");
-		Vertex vE = new Vertex("E");
-		Vertex vF = new Vertex("F");
-		Vertex vG = new Vertex("G");
-		
-		ArrayList<Vertex> vert = new ArrayList<Vertex>();
-		vert.add(vA);
-		vert.add(vB);
-		vert.add(vC);
-		vert.add(vD);
-		vert.add(vE);
-		vert.add(vF);
-		vert.add(vG);
-		vert.add(vv);
-		
-		ArrayList<Edge> edge = new ArrayList<Edge>();
-		edge.add(new Edge(vA, vC, 2));
-		edge.add(new Edge(vA, vD, 1));
-		edge.add(new Edge(vB, vA, 2));
-		edge.add(new Edge(vC, vD, 1));
-		edge.add(new Edge(vC, vF, 2));
-		edge.add(new Edge(vD, vB, 5));
-		edge.add(new Edge(vD, vE, 1));
-		edge.add(new Edge(vD, vG, 5));
-		edge.add(new Edge(vD, vF, 6));
-		edge.add(new Edge(vE, vB, 1));
-		edge.add(new Edge(vF, vG, 10));
-		edge.add(new Edge(vG, vE, 3));
-		
-		MyGraph graph = new MyGraph(vert, edge);
-		graph.printMap();
-		System.out.println(graph.vertices());
-		graph.shortestPath(vA, vB);
-		System.out.println("A: " + vA.path);
-		System.out.println("B: " + vB.path);
-		System.out.println("C: " + vC.path);
-		System.out.println("D: " + vD.path);
-		System.out.println("E: " + vE.path);
-		System.out.println("F: " + vF.path);
-		System.out.println("G: " + vG.path);
-		
-		
-		
-		/*Vertex vert1 = new Vertex("one");
-		Vertex vert2 = new Vertex("two");
-		Vertex vert3 = new Vertex("three");
-		Vertex vert4 = new Vertex("four");
-		
-		ArrayList<Vertex> vert = new ArrayList<Vertex>();
-		vert.add(vert1);
-		vert.add(vert2);
-		vert.add(vert3);
-		vert.add(vert4);
-		//System.out.println(vert);
-		
-		ArrayList<Edge> edge = new ArrayList<Edge>();
-		edge.add(new Edge(vert1, vert4, 3000));
-		edge.add(new Edge(vert1, vert2, 6000));
-		edge.add(new Edge(vert2, vert4, 1));
-		
-		MyGraph graph = new MyGraph(vert, edge);
-		graph.printMap();
-		System.out.println(graph.edgeCost(vert1, vert2));
-		*/
-		
-		/**USE THIS TO MESS WITH CHECKVERTEX/EDGE INDEPENDENTLY**/
-//		HashMap<Vertex, ArrayList<Edge>> test = new HashMap<Vertex, ArrayList<Edge>>();
-//		test.put(vert1, new ArrayList<Edge>());
-//		test.put(vert2, new ArrayList<Edge>());
-//		Edge temp; 
-//		Iterator<Edge> iter = edge.iterator();
-//		while(iter.hasNext()) { 
-//			temp = iter.next();
-//			if (test.containsKey(temp.getSource()) 
-//					&& test.containsKey(temp.getDestination()) 
-//					&& temp.getWeight() >= 0) {
-//				test.get(temp.getSource()).add(temp);
-//			}
-//		}
-//		System.out.println(test);
-		
-	}
+	private Path tracePath(Vertex b, Vertex a) {
+		LinkedList<Vertex> result = new LinkedList<Vertex>();
+		b = localizeV(b);
 
+		if (b.path == null || adjacentVertices(a).isEmpty()) {
+			return null;
+		} else {
+			int pathSum = 0;
+			while (b!= null) {
+				result.addFirst(b);
+				if (edgeCost(b.path, b) != -1) {
+					pathSum += edgeCost(b.path, b);
+				}
+				b = b.path;
+			}
+			return new Path(result, pathSum);
+		}
+	}
 }

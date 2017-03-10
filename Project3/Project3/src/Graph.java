@@ -1,3 +1,8 @@
+/*Provided Graph interface.
+ * Stephanie Day & Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Project 3
+ */
 import java.util.Collection;
 
 /**

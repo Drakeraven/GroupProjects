@@ -1,3 +1,8 @@
+/*Provided Path Class.
+ * Stephanie Day & Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Project 3
+ */
 import java.util.List;
 
 public class Path {

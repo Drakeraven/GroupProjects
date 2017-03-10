@@ -1,5 +1,9 @@
 /**
  * Representation of a directed graph edge.
+ * Provided By Professor.
+ * Stephanie Day & Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Project 3
  */
 public class Edge {
 	private Vertex from, to;

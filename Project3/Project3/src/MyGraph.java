@@ -1,3 +1,8 @@
+/*Implemented Graph to represent Vertices and Edges
+ * Stephanie Day & Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Project 3
+ */
 import java.util.*;
 
 /**
@@ -169,16 +174,12 @@ public class MyGraph implements Graph {
 	public Collection<Vertex> adjacentVertices(Vertex v) {
 		Collection<Vertex> temp = new ArrayList<Vertex>();
 		if(myMap.containsKey(v)){ 
-			//HAVE TO LOOK FOR THE VERTEX
 			Iterator<Edge> iter = myMap.get(v).iterator();
 			while (iter.hasNext()){
 				temp.add(iter.next().getDestination()); 			
 			} 
 		}
 		return temp;
-
-		// YOUR CODE HERE
-
 	}
 
 	/**
@@ -197,7 +198,6 @@ public class MyGraph implements Graph {
 	@Override
 	public int edgeCost(Vertex a, Vertex b) {
 		
-		//FIX THE SELF EDGE PROBLEM
 		int cost = 0; 
 		Collection<Vertex> vert = new ArrayList<Vertex>();
 		Collection<Edge> edge = new ArrayList<Edge>();
@@ -264,10 +264,6 @@ public class MyGraph implements Graph {
 					}
 				}
 			}
-			//TODO: FOR TESTING.
-//			for (Vertex eV: myVertex) {
-//				System.out.println(eV.getLabel() + " " + eV.cost +  " " +  eV.path);
-//			} 
 			return tracePath(b, a);
 		}
 	}

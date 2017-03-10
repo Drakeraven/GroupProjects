@@ -1,7 +1,9 @@
 /*Test Program for the Java programs 
  * Uses provided Find Path's for reading
  * and generating a graph from a file.
- * 
+ * Stephanie Day & Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Project 3
  */
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,8 +22,6 @@ public class TestGraph {
 
 		MyGraph g = readGraph(args[0],args[1]);
 
-		@SuppressWarnings("resource")
-		//Scanner console = new Scanner(System.in);
 		Collection<Vertex> v = g.vertices();
                 Collection<Edge> e = g.edges();
 		System.out.println("Vertices are "+v);
@@ -90,16 +90,7 @@ public class TestGraph {
 		Vertex b = new Vertex("B");
 		Vertex a = new Vertex("A");
 		Path output = tGraph.shortestPath(b, a);
-		System.out.println("Shortest Path from " + b.getLabel() + " to " + a.getLabel() + ": ");
-		if (output == null) {
-			System.out.println("Does not exist.");
-		} else {
-			for (Vertex eachVertex : output.vertices) {
-				System.out.print(eachVertex.getLabel() + " ");
-			}
-			System.out.print("\n");
-			System.out.println(output.cost);
-		}
+		printResult(b, a, output);
 	}
 	
 	/**
@@ -111,16 +102,7 @@ public class TestGraph {
 		Vertex a = new Vertex("A");
 		Vertex c = new Vertex("C");
 		Path output = tGraph.shortestPath(a, c);
-		System.out.println("Shortest Path from " + a.getLabel() + " to " + c.getLabel() + ": ");
-		if (output == null) {
-			System.out.println("Does not exist.");
-		} else {
-			for (Vertex eachVertex : output.vertices) {
-				System.out.print(eachVertex.getLabel() + " ");
-			}
-			System.out.print("\n");
-			System.out.println(output.cost);
-		}
+		printResult(a, c, output);
 	}
 	
 	/**
@@ -132,16 +114,7 @@ public class TestGraph {
 		Vertex c = new Vertex("C");
 		Vertex d = new Vertex("D");
 		Path output = tGraph.shortestPath(c, d);
-		System.out.println("Shortest Path from " + c.getLabel() + " to " + d.getLabel() + ": ");
-		if (output == null) {
-			System.out.println("Does not exist.");
-		} else {
-			for (Vertex eachVertex : output.vertices) {
-				System.out.print(eachVertex.getLabel() + " ");
-			}
-			System.out.print("\n");
-			System.out.println(output.cost);
-		}
+		printResult(c, d, output);
 	}
 	
 	/**
@@ -153,16 +126,7 @@ public class TestGraph {
 		Vertex a = new Vertex("A");
 		Vertex b = new Vertex("B");
 		Path output = tGraph.shortestPath(a, b);
-		System.out.println("Shortest Path from " + a.getLabel() + " to " + b.getLabel() + ": ");
-		if (output == null) {
-			System.out.println("Does not exist.");
-		} else {
-			for (Vertex eachVertex : output.vertices) {
-				System.out.print(eachVertex.getLabel() + " ");
-			}
-			System.out.print("\n");
-			System.out.println(output.cost);
-		}
+		printResult(a, b, output);
 	}
 	
 	/**
@@ -174,22 +138,17 @@ public class TestGraph {
 		Vertex d = new Vertex("D");
 		Vertex b = new Vertex("B");
 		Path output = tGraph.shortestPath(d, b);
-		System.out.println("Shortest Path from " + d.getLabel() + " to " + b.getLabel() + ": ");
-		if (output == null) {
-			System.out.println("Does not exist.");
-		} else {
-			for (Vertex eachVertex : output.vertices) {
-				System.out.print(eachVertex.getLabel() + " ");
-			}
-			System.out.print("\n");
-			System.out.println(output.cost);
-		}
+		printResult(d, b, output);
 	}
 	
 	private static void test6(MyGraph tGraph) {
 		Vertex a = new Vertex("A");
 		Path output = tGraph.shortestPath(a, a);
-		System.out.println("Shortest Path from " + a.getLabel() + " to " + a.getLabel() + ": ");
+		printResult(a, a, output);
+	}
+	
+	private static void printResult(Vertex a, Vertex b, Path output) {
+		System.out.println("Shortest Path from " + a.getLabel() + " to " + b.getLabel() + ": ");
 		if (output == null) {
 			System.out.println("Does not exist.");
 		} else {
@@ -199,5 +158,6 @@ public class TestGraph {
 			System.out.print("\n");
 			System.out.println(output.cost);
 		}
+		
 	}
 }

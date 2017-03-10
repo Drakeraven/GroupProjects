@@ -1,5 +1,8 @@
-/**
- * Representation of a graph vertex
+/*Provided Representation of a graph Vertex.
+ * Added comparable.
+ * Stephanie Day & Cassie Renz
+ * TCSS 342 - Winter 2017
+ * Project 3
  */
 public class Vertex implements Comparable<Vertex> {
 	// label attached to this vertex

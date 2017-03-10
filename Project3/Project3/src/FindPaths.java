@@ -1,3 +1,9 @@
+/*Find Paths, mostly provided by professor with
+ * the addition of output.
+ * Stephanie Day and Cassie Renz
+ * TCSS 342 - winter 2017
+ * Project 3
+ */
 import java.util.*;
 import java.io.*;
 
